@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cxui/components/select_button_list/select_button_list.dart';
+import 'package:flutter_cxui/pages/page_select_button_list.dart';
+
+class RouteItem {
+  String path;
+  String name;
+  RouteItem(this.path, this.name);
+}
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +19,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // onGenerateRoute: (RouteSettings setting) {
+
+      // },
+      routes: {
+        "/select_button_list": (context) => const PageSelectButtonList(),
+      },
       title: 'Flutter CXUI DEMO',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter CXUI DEMO'),
@@ -41,6 +54,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<RouteItem> routes = [
+    RouteItem("/select_button_list", "Select Button List"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -60,16 +77,28 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: SelectButtonList(
-          boxColor: Colors.transparent,
-          bgColor: Colors.blueAccent,
-          size: 50,
-          data: const <String>["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-          onChange: (index, item) {
-            print("$index $item");
-          },
+        child: ListView.separated(
+          itemBuilder: itemBuilder,
+          separatorBuilder: separatorBuilder,
+          itemCount: routes.length,
         ),
       ),
     );
+  }
+
+  Widget? itemBuilder(BuildContext context, int index) {
+    return ListTile(
+      leading: Text(routes[index].name),
+      trailing: Icon(Icons.arrow_forward_ios),
+      hoverColor: Colors.green,
+      focusColor: Colors.green[100],
+      onTap: () {
+        Navigator.pushNamed(context, routes[index].path);
+      },
+    );
+  }
+
+  Widget separatorBuilder(BuildContext context, int index) {
+    return const Divider();
   }
 }
