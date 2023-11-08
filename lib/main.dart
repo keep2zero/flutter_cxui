@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cxui/components/select_button_list/select_button_list.dart';
 import 'package:flutter_cxui/pages/page_select_button_list.dart';
 
+import 'pages/page_image_card.dart';
+
 class RouteItem {
   String path;
   String name;
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
       // },
       routes: {
         "/select_button_list": (context) => const PageSelectButtonList(),
+        "/image_card": (context) => const PageImageCard(),
       },
       title: 'Flutter CXUI DEMO',
       theme: ThemeData(
@@ -56,6 +59,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<RouteItem> routes = [
     RouteItem("/select_button_list", "Select Button List"),
+    RouteItem("/image_card", "ImageCard"),
   ];
 
   @override
