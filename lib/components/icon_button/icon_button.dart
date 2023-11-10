@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CxIconButton extends StatefulWidget {
-  CxIconButton({super.key, this.icon, this.click, this.size});
+  CxIconButton({super.key, this.icon, this.click, this.size, this.color});
   IconData? icon;
   double? size;
+  Color? color;
   void Function()? click;
 
   @override
@@ -33,7 +34,7 @@ class _CxIconButtonState extends State<CxIconButton> {
         child: Icon(
           widget.icon,
           size: widget.size ?? 16,
-          color: hover ? theme.focusColor : theme.hintColor,
+          color: hover ? theme.focusColor : widget.color,
         ),
         onTap: () {
           widget.click != null ? widget.click!() : ();

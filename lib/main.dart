@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cxui/pages/page_card.dart';
+import 'package:flutter_cxui/pages/page_icon_button.dart';
+import 'package:flutter_cxui/pages/page_place_grid.dart';
 import 'package:flutter_cxui/pages/page_select_button_list.dart';
 
 import 'pages/page_image_card.dart';
@@ -25,6 +27,8 @@ class MyApp extends StatelessWidget {
 
       // },
       routes: {
+        "/place_grid": (context) => PagePlaceGrid(),
+        "/icon_button": (context) => PageIconButton(),
         "/select_button_list": (context) => const PageSelectButtonList(),
         "/image_card": (context) => const PageImageCard(),
         "/card": (context) => const PageCard(),
@@ -56,6 +60,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<RouteItem> routes = [
+    RouteItem("/place_grid", "Place Grid"),
+    RouteItem("/icon_button", "Icon Button"),
     RouteItem("/select_button_list", "Select Button List"),
     RouteItem("/image_card", "ImageCard"),
     RouteItem("/card", "Card"),

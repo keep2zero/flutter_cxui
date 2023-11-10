@@ -7,11 +7,13 @@ class CxCard extends StatelessWidget {
       this.titleSize,
       this.foot,
       required this.body,
-      this.actions});
+      this.actions,
+      this.minHeight});
   Widget body;
   Widget? foot;
   String? title;
   double? titleSize;
+  double? minHeight;
   List<Widget>? actions;
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class CxCard extends StatelessWidget {
 
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
+      constraints: BoxConstraints(minHeight: minHeight ?? 80),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.background.withAlpha(200),
         borderRadius: const BorderRadius.all(
