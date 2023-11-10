@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cxui/components/select_button_list/select_button_list.dart';
+import 'package:flutter_cxui/pages/page_card.dart';
 import 'package:flutter_cxui/pages/page_select_button_list.dart';
 
 import 'pages/page_image_card.dart';
@@ -27,12 +27,10 @@ class MyApp extends StatelessWidget {
       routes: {
         "/select_button_list": (context) => const PageSelectButtonList(),
         "/image_card": (context) => const PageImageCard(),
+        "/card": (context) => const PageCard(),
       },
       title: 'Flutter CXUI DEMO',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
+      theme: ThemeData.light(),
       home: const MyHomePage(title: 'Flutter CXUI DEMO'),
     );
   }
@@ -60,24 +58,13 @@ class _MyHomePageState extends State<MyHomePage> {
   List<RouteItem> routes = [
     RouteItem("/select_button_list", "Select Button List"),
     RouteItem("/image_card", "ImageCard"),
+    RouteItem("/card", "Card"),
   ];
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
@@ -94,8 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return ListTile(
       leading: Text(routes[index].name),
       trailing: Icon(Icons.arrow_forward_ios),
-      hoverColor: Colors.green,
-      focusColor: Colors.green[100],
+      //hoverColor: Colors.green,
+      //focusColor: Colors.green[100],
       onTap: () {
         Navigator.pushNamed(context, routes[index].path);
       },

@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_cxui/components/image_card/image_card.dart';
 
@@ -16,8 +13,8 @@ class PageImageCard extends StatelessWidget {
       body: GridView.builder(
         // shrinkWrap: true,
         itemCount: 5,
-        padding: EdgeInsets.all(6),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        padding: const EdgeInsets.all(6),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 2 / 3,
         ),
