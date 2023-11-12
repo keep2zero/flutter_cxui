@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class CxSliderView extends StatefulWidget {
   CxSliderView({super.key, required this.objects});
@@ -17,63 +20,145 @@ class SliderObject {
 
 class _SliderViewState extends State<CxSliderView> {
   int index = 0;
+  bool isdrag = false;
+  double dragstart = 0;
+  double dragdistance = 0;
+  late Timer timer;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    timer = startTimer();
+  }
+
+  Timer startTimer() {
+    return Timer.periodic(Duration(seconds: 5), (timer) {
+      setState(() {
+        if (index >= widget.objects.length - 1) {
+          setState(() {
+            index = 0;
+          });
+        } else {
+          setState(() {
+            index++;
+          });
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 180,
       margin: const EdgeInsets.all(10),
       child: Stack(
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Container(
-              width: double.infinity,
-              height: 180,
-              color: Colors.red,
-              child: Image.network(
-                widget.objects[index].objCover,
-                fit: BoxFit.cover,
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.center,
+              child: GestureDetector(
+                onHorizontalDragStart: (DragStartDetails details) {
+                  dragstart = details.localPosition.dx;
+                  timer.cancel();
+                },
+                onHorizontalDragEnd: (DragEndDetails details) {
+                  timer = startTimer();
+                  if (dragdistance.abs() > 60) {
+                    if (dragdistance < 0 && index < widget.objects.length - 1) {
+                      setState(() {
+                        index++;
+                      });
+                    }
+                    if (dragdistance > 0 && index > 0) {
+                      setState(() {
+                        index--;
+                      });
+                    }
+                  }
+                },
+                onHorizontalDragUpdate: (DragUpdateDetails details) {
+                  //print("drag..............");
+                  dragdistance = details.localPosition.dx - dragstart;
+                },
+                child: itemSliderImage(context, index),
               ),
             ),
           ),
           Positioned.fill(
+            left: 8,
+            right: 8,
+            bottom: 8,
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
-                //color: Colors.white,
-                height: 20,
-                child: Builder(builder: (context) {
-                  List<Widget> children = [];
-                  for (int i = 0; i < widget.objects.length; i++) {
-                    children.add(
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            index = i;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 2),
-                          decoration: BoxDecoration(
-                            color: index == i ? Colors.white : Colors.white54,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: children,
-                  );
-                }),
+              child: SizedBox(
+                height: 30,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildTitle(),
+                    buildDot(),
+                  ],
+                ),
               ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Container buildDot() {
+    return Container(
+      //color: Colors.white,
+      // height: 20,
+      child: Builder(builder: (context) {
+        List<Widget> children = [];
+        for (int i = 0; i < widget.objects.length; i++) {
+          children.add(
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  index = i;
+                });
+              },
+              child: Container(
+                width: 6,
+                height: 6,
+                margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+                decoration: BoxDecoration(
+                  color: index == i ? Colors.white : Colors.white54,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+            ),
+          );
+        }
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: children,
+        );
+      }),
+    );
+  }
+
+  Widget itemSliderImage(BuildContext context, int ix) {
+    return Container(
+      // height: 180,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Image.network(
+        widget.objects[ix].objCover,
+        fit: BoxFit.fitWidth,
+        width: double.infinity,
+      ),
+    );
+  }
+
+  Widget buildTitle() {
+    return Text(widget.objects[index].objName);
   }
 }

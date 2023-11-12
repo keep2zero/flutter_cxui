@@ -54,15 +54,18 @@ class PageMovieHome extends StatelessWidget {
               "奥运"
             ],
           ),
-          CxSliderView(objects: [
-            SliderObject("第一个",
-                "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200q7mndle1664438925875/332?max_age=7776001"),
-            SliderObject("第二个",
-                "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200ap8s2p31697455490020/332?max_age=7776001"),
-            SliderObject("第三个",
-                "https://puui.qpic.cn/vpic_cover/m0038bibwlq/m0038bibwlq_hz.jpg/640"),
-          ]),
+          CxSliderView(
+            objects: [
+              SliderObject("海豹看看",
+                  "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200q7mndle1664438925875/332?max_age=7776001"),
+              SliderObject("故宫里的大怪兽之莫奈何的谜题",
+                  "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200ap8s2p31697455490020/332?max_age=7776001"),
+              SliderObject("小不点.....",
+                  "https://puui.qpic.cn/vpic_cover/m0038bibwlq/m0038bibwlq_hz.jpg/640"),
+            ],
+          ),
           buildList(context),
+          buildEnd(context),
         ],
       ),
     );
@@ -75,6 +78,7 @@ class PageMovieHome extends StatelessWidget {
         controller: null,
         shrinkWrap: true,
         itemCount: 6,
+        physics: NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 1,
@@ -86,5 +90,24 @@ class PageMovieHome extends StatelessWidget {
 
   Widget? itemBuilder(BuildContext context, int index) {
     return ImageCard(title: "hello", subtitle: "test");
+  }
+
+  Widget buildEnd(BuildContext context) {
+    return Container(
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: 10,
+        itemBuilder: (ctx, inx) {
+          return Container(
+            height: 200,
+            child: ImageCard(
+              title: "您好",
+              subtitle: "是什么",
+            ),
+          );
+        },
+      ),
+    );
   }
 }
