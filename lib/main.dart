@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cxui/pages/example/movie/page_movie_home.dart';
+import 'package:flutter_cxui/pages/example/movie/page_movie_item.dart';
 import 'package:flutter_cxui/pages/page_card.dart';
 import 'package:flutter_cxui/pages/page_icon_button.dart';
 import 'package:flutter_cxui/pages/page_place_grid.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         "/select_button_list": (context) => const PageSelectButtonList(),
         "/image_card": (context) => const PageImageCard(),
         "/card": (context) => const PageCard(),
-        "/app/movie/home": (context) => PageMovieHome()
+        "/app/movie/home": (context) => PageMovieHome(),
+        "/app/movie/item": (context) => PageMovieItem(),
       },
       title: 'Flutter CXUI DEMO',
       theme: ThemeData.dark(),

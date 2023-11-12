@@ -55,6 +55,9 @@ class PageMovieHome extends StatelessWidget {
             ],
           ),
           CxSliderView(
+            onTap: (SliderObject obj, int index) {
+              Navigator.of(context).pushNamed("/app/movie/item");
+            },
             objects: [
               SliderObject("海豹看看",
                   "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200q7mndle1664438925875/332?max_age=7776001"),
