@@ -13,4 +13,4 @@ A new Flutter ui components.
 **您的支持，是我持续输出的动力.**
 
 <!-- ![微信支持](assets/static/wechat.jpg) -->
-<img src="assets/static/wechat.jpg" alt="微信支持" width="300" />
+<img src="assets/static/reward.jpg" alt="赞赏支持"  />
