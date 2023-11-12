@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CxTitleNav extends StatefulWidget {
-  CxTitleNav({super.key, required this.items, this.select});
+  CxTitleNav({super.key, required this.items, this.select, this.selectSize});
 
   @override
   State<CxTitleNav> createState() => _CxTitleNavState();
 
   List<String> items;
   int? select;
+  double? selectSize;
 }
 
 class _CxTitleNavState extends State<CxTitleNav> {
@@ -18,6 +19,7 @@ class _CxTitleNavState extends State<CxTitleNav> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       height: 50,
       child: ListView.builder(
         controller: controller,
@@ -47,7 +49,7 @@ class _CxTitleNavState extends State<CxTitleNav> {
             Text(
               widget.items[index],
               style: TextStyle(
-                fontSize: (current == index) ? 20 : 14,
+                fontSize: (current == index) ? (widget.selectSize ?? 20) : 14,
                 color: (current == index) ? Colors.white : theme.hintColor,
               ),
             ),
