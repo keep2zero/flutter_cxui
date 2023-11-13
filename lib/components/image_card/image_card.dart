@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ImageCard extends StatefulWidget {
-  ImageCard({
+class CxImageCard extends StatefulWidget {
+  CxImageCard({
     super.key,
     this.title,
     this.subtitle,
@@ -13,7 +13,7 @@ class ImageCard extends StatefulWidget {
   });
 
   @override
-  State<ImageCard> createState() => _ImageCardState();
+  State<CxImageCard> createState() => _CxImageCardState();
   List<Widget>? topLeft;
   List<Widget>? topRight;
   List<Widget>? bottomLeft;
@@ -23,7 +23,7 @@ class ImageCard extends StatefulWidget {
   double? cornerHeight;
 }
 
-class _ImageCardState extends State<ImageCard> {
+class _CxImageCardState extends State<CxImageCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
