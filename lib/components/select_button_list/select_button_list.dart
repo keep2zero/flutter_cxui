@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CxSelectButtonList extends StatefulWidget {
-  CxSelectButtonList({
+  const CxSelectButtonList({
     super.key,
     required this.data,
     required this.onChange,
@@ -15,16 +15,16 @@ class CxSelectButtonList extends StatefulWidget {
   });
 
   //数据
-  List<String> data;
+  final List<String> data;
 
-  Function onChange;
-  double? size;
-  Color? color;
-  Color? selectColor;
-  Color? bgColor;
-  Color? selectBgColor;
-  Color? boxColor;
-  int? defaultSelect;
+  final Function onChange;
+  final double? size;
+  final Color? color;
+  final Color? selectColor;
+  final Color? bgColor;
+  final Color? selectBgColor;
+  final Color? boxColor;
+  final int? defaultSelect;
 
   @override
   State<CxSelectButtonList> createState() => _CxSelectButtonListState();
