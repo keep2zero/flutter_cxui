@@ -17,6 +17,12 @@ class _PageSelectButtonListState extends State<PageSelectButtonList> {
         title: const Text("Select Button List"),
       ),
       body: CxSelectButtonList(
+        hasTopRight: [2, 3, 4, 5, 6, 7, 8],
+        topRight: Icon(
+          Icons.grade_rounded,
+          color: Colors.amber,
+          size: 16,
+        ),
         boxColor: Colors.transparent,
         bgColor: Colors.blueAccent,
         size: 50,
