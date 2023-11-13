@@ -5,8 +5,15 @@ A new Flutter ui components.
 ## 组件预览
 
 <!-- ![选择按钮列表](assets/static//select_button_list.jpg) -->
-<img src="assets/static/select_button_list.jpg" alt="选择按钮列表" width="300"/>
-<img src="assets/static/image_card.png" alt="图形卡片" width="300"/>
+
+ 
+
+|||
+|--|--|
+|![home](assets/static/list.png)|![select_button_list](assets/static/place_grid.png)|
+|![home](assets/static/icon_button.png)|![select_button_list](assets/static/select_button_list.png)|
+|![home](assets/static/image_card.png)|![select_button_list](assets/static/card.png)|
+
 
 ## 实例预览
 |        |   |
