@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SelectButtonList extends StatefulWidget {
-  SelectButtonList({
+class CxSelectButtonList extends StatefulWidget {
+  CxSelectButtonList({
     super.key,
     required this.data,
     required this.onChange,
@@ -27,10 +27,10 @@ class SelectButtonList extends StatefulWidget {
   int? defaultSelect;
 
   @override
-  State<SelectButtonList> createState() => _SelectButtonListState();
+  State<CxSelectButtonList> createState() => _CxSelectButtonListState();
 }
 
-class _SelectButtonListState extends State<SelectButtonList> {
+class _CxSelectButtonListState extends State<CxSelectButtonList> {
   late int selectIndex = widget.defaultSelect ?? 0;
   @override
   Widget build(BuildContext context) {

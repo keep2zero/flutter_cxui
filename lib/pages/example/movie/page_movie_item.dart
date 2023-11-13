@@ -53,7 +53,7 @@ class PageMovieItem extends StatelessWidget {
               selectSize: 16,
             ),
 
-            SelectButtonList(
+            CxSelectButtonList(
               data: const ["1", "2", "3", "4", "5", "6"],
               onChange: (index, item) {},
             ),

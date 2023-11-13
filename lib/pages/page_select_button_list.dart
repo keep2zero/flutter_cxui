@@ -16,7 +16,7 @@ class _PageSelectButtonListState extends State<PageSelectButtonList> {
       appBar: AppBar(
         title: const Text("Select Button List"),
       ),
-      body: SelectButtonList(
+      body: CxSelectButtonList(
         boxColor: Colors.transparent,
         bgColor: Colors.blueAccent,
         size: 50,
