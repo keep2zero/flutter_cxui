@@ -22,15 +22,15 @@ class PageMovieItem extends StatelessWidget {
               fallbackHeight: 200,
             ),
             CxTitleNav(
-              items: ["详情", "看点", "讨论"],
+              items: const ["详情", "看点", "讨论"],
               selectSize: 16,
             ),
-            Row(
+            const Row(
               children: [
                 SizedBox(
                   width: 20,
                 ),
-                const Text(
+                Text(
                   "梅府有女初成长",
                   style: TextStyle(
                     fontSize: 20,
@@ -40,7 +40,7 @@ class PageMovieItem extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-                const Text(
+                Text(
                   "简介 >",
                   style: TextStyle(fontSize: 12, color: Colors.white38),
                 ),
@@ -49,20 +49,27 @@ class PageMovieItem extends StatelessWidget {
 
             //
             CxTitleNav(
-              items: ["选集"],
+              items: const ["选集"],
               selectSize: 16,
             ),
 
             SelectButtonList(
-              data: ["1", "2", "3", "4", "5", "6"],
+              data: const ["1", "2", "3", "4", "5", "6"],
               onChange: (index, item) {},
             ),
 
             //
 
             CxCard(
+              margin: const EdgeInsets.all(8),
+              radius: 8,
+              bgColor: Colors.transparent,
               title: "推荐电影",
-              body: Container(
+              subtitle: "hello",
+              actions: const [
+                Icon(Icons.hot_tub, color: Colors.amber),
+              ],
+              body: SizedBox(
                 height: 150,
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -72,7 +79,7 @@ class PageMovieItem extends StatelessWidget {
                     return SizedBox(
                       width: 160,
                       height: 120,
-                      child: ImageCard(title: "您好"),
+                      child: CxImageCard(title: "您好"),
                     );
                   },
                 ),

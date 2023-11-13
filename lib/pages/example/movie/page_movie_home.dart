@@ -76,12 +76,12 @@ class PageMovieHome extends StatelessWidget {
 
   Widget buildList(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(6),
+      margin: const EdgeInsets.all(6),
       child: GridView.builder(
         controller: null,
         shrinkWrap: true,
         itemCount: 6,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 1,
@@ -92,7 +92,7 @@ class PageMovieHome extends StatelessWidget {
   }
 
   Widget? itemBuilder(BuildContext context, int index) {
-    return ImageCard(title: "hello", subtitle: "test");
+    return CxImageCard(title: "hello", subtitle: "test");
   }
 
   Widget buildEnd(BuildContext context) {
@@ -104,7 +104,7 @@ class PageMovieHome extends StatelessWidget {
         itemBuilder: (ctx, inx) {
           return Container(
             height: 200,
-            child: ImageCard(
+            child: CxImageCard(
               title: "您好",
               subtitle: "是什么",
             ),

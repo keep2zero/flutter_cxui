@@ -24,7 +24,7 @@ class PageImageCard extends StatelessWidget {
   }
 
   Widget? itemBuilder(BuildContext context, int index) {
-    return ImageCard(
+    return CxImageCard(
       title: "清风落叶",
       subtitle: "又一个神剧",
       topLeft: const [
