@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CxPlaceGrid extends StatefulWidget {
-  CxPlaceGrid(
+  const CxPlaceGrid(
       {super.key, this.items, this.cols, this.space, this.height, this.ratio});
 
   @override
   State<CxPlaceGrid> createState() => _CxPlaceGridState();
 
-  List<PlaceGridItem>? items;
-  int? cols;
-  double? space;
-  double? height;
-  double? ratio;
+  final List<PlaceGridItem>? items;
+  final int? cols;
+  final double? space;
+  final double? height;
+  final double? ratio;
 }
 
 class _CxPlaceGridState extends State<CxPlaceGrid> {
