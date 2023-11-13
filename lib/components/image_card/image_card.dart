@@ -33,7 +33,7 @@ class _CxImageCardState extends State<CxImageCard> {
       child: Stack(
         // fit: StackFit.expand,
         children: [
-          buildMain(),
+          buildMain(context),
         ],
       ),
     );
@@ -65,7 +65,9 @@ class _CxImageCardState extends State<CxImageCard> {
     );
   }
 
-  Column buildMain() {
+  Column buildMain(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     final children = [buildCover()];
     if (widget.title != null || widget.subtitle != null) {
       children.add(
@@ -90,9 +92,9 @@ class _CxImageCardState extends State<CxImageCard> {
       children.add(
         Text(
           widget.subtitle!,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
-            color: Colors.black54,
+            color: theme.hintColor,
           ),
         ),
       );
