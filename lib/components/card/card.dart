@@ -1,20 +1,37 @@
 import 'package:flutter/material.dart';
 
 class CxCard extends StatelessWidget {
-  CxCard(
-      {super.key,
-      this.title,
-      this.titleSize,
-      this.foot,
-      required this.body,
-      this.actions,
-      this.minHeight});
+  CxCard({
+    super.key,
+    this.radius,
+    this.margin,
+    this.title,
+    this.subtitle,
+    this.titleSize,
+    this.subtitleSize,
+    this.foot,
+    required this.body,
+    this.actions,
+    this.bgColor,
+    this.minHeight,
+    this.footWidget,
+  });
+
+  double? radius;
+  EdgeInsetsGeometry? margin;
+
   Widget body;
   Widget? foot;
+  Widget? titleWidget;
   String? title;
+  String? subtitle;
   double? titleSize;
+  double? subtitleSize;
   double? minHeight;
+  Color? bgColor;
   List<Widget>? actions;
+
+  Widget? footWidget;
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [];
@@ -28,48 +45,84 @@ class CxCard extends StatelessWidget {
       children.add(buildFt());
     }
 
-    return Container(
+    Widget box = Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      constraints: BoxConstraints(minHeight: minHeight ?? 80),
+      constraints: BoxConstraints(
+        minHeight: minHeight ?? 80,
+      ),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background.withAlpha(200),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(8),
+        color:
+            bgColor ?? Theme.of(context).colorScheme.background.withAlpha(200),
+        borderRadius: BorderRadius.all(
+          Radius.circular(radius ?? 0),
         ),
       ),
       child: Column(
         children: children,
       ),
     );
+
+    if (margin != null) {
+      box = Padding(
+        padding: margin!,
+        child: box,
+      );
+    }
+
+    return box;
   }
 
   Widget buildHd(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            child: Row(
-              children: [
-                Text(
-                  title ?? "",
-                  style: TextStyle(
-                    fontSize: this.titleSize ?? 14,
-                    // color: Colors.black87,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            child: Row(
-              children: actions ?? [],
-            ),
-          )
-        ],
-      ),
+    final theme = Theme.of(context);
+    final hds = <Widget>[];
+
+    final titles = Column(
+      // mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [],
     );
+    if (title != null) {
+      titles.children.add(
+        Text(
+          title ?? "",
+          style: TextStyle(
+            fontSize: titleSize ?? 14,
+            // color: Colors.black87,
+          ),
+        ),
+      );
+    }
+
+    if (subtitle != null) {
+      titles.children.add(
+        Text(
+          subtitle ?? "",
+          style: TextStyle(
+            fontSize: subtitleSize ?? 12,
+            color: theme.hintColor,
+          ),
+        ),
+      );
+    }
+
+    if (titles.children.isNotEmpty) {
+      hds.add(titles);
+    }
+    return titleWidget ??
+        Container(
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: hds,
+              ),
+              Row(
+                children: actions ?? [],
+              )
+            ],
+          ),
+        );
   }
 
   Widget buildBd(BuildContext context) {
@@ -82,9 +135,11 @@ class CxCard extends StatelessWidget {
   }
 
   Widget buildFt() {
-    return Container(
-      constraints: foot != null ? const BoxConstraints(minHeight: 20) : null,
-      child: foot,
-    );
+    return footWidget ??
+        Container(
+          constraints:
+              foot != null ? const BoxConstraints(minHeight: 20) : null,
+          child: foot,
+        );
   }
 }
