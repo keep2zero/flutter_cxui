@@ -48,10 +48,15 @@ class _CxPlaceGridState extends State<CxPlaceGrid> {
                   color: item.color ?? Colors.black,
                   size: item.iconSize ?? 16,
                 ),
+                const SizedBox(
+                  height: 5,
+                ),
                 Text(
                   item.title ?? "",
+                  // maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: item.titleSize ?? 12,
+                    fontSize: item.titleSize ?? 10,
                     color: item.color ?? Colors.black,
                   ),
                 ),
