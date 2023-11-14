@@ -6,7 +6,9 @@ class CxCard extends StatelessWidget {
     this.radius,
     this.margin,
     this.title,
+    this.titleColor,
     this.subtitle,
+    this.subtitleColor,
     this.titleSize,
     this.subtitleSize,
     this.foot,
@@ -15,6 +17,7 @@ class CxCard extends StatelessWidget {
     this.bgColor,
     this.minHeight,
     this.footWidget,
+    this.hdBgColor,
   });
 
   double? radius;
@@ -22,6 +25,7 @@ class CxCard extends StatelessWidget {
 
   Widget body;
   Widget? foot;
+  Color? hdBgColor;
   Widget? titleWidget;
   String? title;
   String? subtitle;
@@ -29,6 +33,8 @@ class CxCard extends StatelessWidget {
   double? subtitleSize;
   double? minHeight;
   Color? bgColor;
+  Color? titleColor;
+  Color? subtitleColor;
   List<Widget>? actions;
 
   Widget? footWidget;
@@ -87,7 +93,7 @@ class CxCard extends StatelessWidget {
           title ?? "",
           style: TextStyle(
             fontSize: titleSize ?? 14,
-            // color: Colors.black87,
+            color: titleColor ?? theme.primaryColor,
           ),
         ),
       );
@@ -99,7 +105,7 @@ class CxCard extends StatelessWidget {
           subtitle ?? "",
           style: TextStyle(
             fontSize: subtitleSize ?? 12,
-            color: theme.hintColor,
+            color: subtitleColor ?? theme.hintColor,
           ),
         ),
       );
@@ -111,6 +117,7 @@ class CxCard extends StatelessWidget {
     return titleWidget ??
         Container(
           padding: const EdgeInsets.all(8),
+          color: hdBgColor ?? Colors.transparent,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -128,7 +135,7 @@ class CxCard extends StatelessWidget {
   Widget buildBd(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: Theme.of(context).colorScheme.surface.withAlpha(100),
+      // color: Theme.of(context).colorScheme.surface.withAlpha(100),
       padding: const EdgeInsets.all(8),
       child: body,
     );
