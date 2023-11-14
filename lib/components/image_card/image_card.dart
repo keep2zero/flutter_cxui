@@ -95,7 +95,7 @@ class _CxImageCardState extends State<CxImageCard> {
         Text(
           widget.title!,
           style: const TextStyle(
-            fontSize: 16,
+            fontSize: 14,
           ),
         ),
       );
@@ -106,7 +106,7 @@ class _CxImageCardState extends State<CxImageCard> {
         Text(
           widget.subtitle!,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 10,
             color: theme.hintColor,
           ),
         ),

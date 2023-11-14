@@ -34,7 +34,8 @@ class PageImageCard extends StatelessWidget {
         ),
         Icon(
           Icons.hotel_class,
-          color: Colors.amber,
+          color: Colors.amberAccent,
+          size: 16,
         ),
       ],
       topRight: [
@@ -52,7 +53,7 @@ class PageImageCard extends StatelessWidget {
             child: Text(
               "独播",
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: Colors.white,
               ),
             ),
@@ -64,6 +65,7 @@ class PageImageCard extends StatelessWidget {
           "16集全",
           style: TextStyle(
             color: Colors.white,
+            fontSize: 10,
           ),
         ),
         SizedBox(width: 5),
@@ -79,9 +81,12 @@ class PageImageCard extends StatelessWidget {
               bottomLeft: Radius.circular(5),
             ),
           ),
-          child: const Text(
-            "电视机",
-            style: TextStyle(color: Colors.white, fontSize: 12),
+          child: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: const Text(
+              "电视机",
+              style: TextStyle(color: Colors.white, fontSize: 10),
+            ),
           ),
         )
       ],

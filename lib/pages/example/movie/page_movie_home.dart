@@ -97,22 +97,20 @@ class PageMovieHome extends StatelessWidget {
   }
 
   Widget buildEnd(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: 10,
-        itemBuilder: (ctx, inx) {
-          return Container(
-            height: 200,
-            child: CxImageCard(
-              title: "您好",
-              subtitle: "是什么",
-              img: "assets/img/card-img-01.jpg",
-            ),
-          );
-        },
-      ),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 10,
+      itemBuilder: (ctx, inx) {
+        return const SizedBox(
+          height: 200,
+          child: CxImageCard(
+            title: "您好",
+            subtitle: "是什么",
+            img: "assets/img/card-img-01.jpg",
+          ),
+        );
+      },
     );
   }
 }
