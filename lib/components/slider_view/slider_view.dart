@@ -1,16 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class CxSliderView extends StatefulWidget {
-  CxSliderView({super.key, required this.objects, this.onTap});
+  const CxSliderView({super.key, required this.objects, this.onTap});
 
   @override
   State<CxSliderView> createState() => _SliderViewState();
 
-  List<SliderObject> objects;
-  void Function(SliderObject, int)? onTap;
+  final List<SliderObject> objects;
+  final void Function(SliderObject, int)? onTap;
 }
 
 class SliderObject {
@@ -165,5 +164,13 @@ class _SliderViewState extends State<CxSliderView> {
 
   Widget buildTitle() {
     return Text(widget.objects[index].objName);
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+
+    timer.cancel();
   }
 }
