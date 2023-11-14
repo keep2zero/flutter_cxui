@@ -92,7 +92,8 @@ class PageMovieHome extends StatelessWidget {
   }
 
   Widget? itemBuilder(BuildContext context, int index) {
-    return CxImageCard(title: "hello", subtitle: "test");
+    return const CxImageCard(
+        title: "hello", subtitle: "test", img: "assets/img/card-img-01.jpg");
   }
 
   Widget buildEnd(BuildContext context) {
@@ -107,6 +108,7 @@ class PageMovieHome extends StatelessWidget {
             child: CxImageCard(
               title: "您好",
               subtitle: "是什么",
+              img: "assets/img/card-img-01.jpg",
             ),
           );
         },

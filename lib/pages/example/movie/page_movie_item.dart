@@ -76,10 +76,13 @@ class PageMovieItem extends StatelessWidget {
                   itemCount: 10,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return SizedBox(
+                    return const SizedBox(
                       width: 160,
                       height: 120,
-                      child: CxImageCard(title: "您好"),
+                      child: CxImageCard(
+                        title: "您好",
+                        img: "assets/img/card-img-01.jpg",
+                      ),
                     );
                   },
                 ),

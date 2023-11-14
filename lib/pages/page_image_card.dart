@@ -27,6 +27,7 @@ class PageImageCard extends StatelessWidget {
     return CxImageCard(
       title: "清风落叶",
       subtitle: "又一个神剧",
+      img: "assets/img/card-img-01.jpg",
       topLeft: const [
         SizedBox(
           width: 8,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CxImageCard extends StatefulWidget {
-  CxImageCard({
+  const CxImageCard({
     super.key,
     this.title,
     this.subtitle,
@@ -10,17 +10,23 @@ class CxImageCard extends StatefulWidget {
     this.bottomRight,
     this.bottomLeft,
     this.cornerHeight,
+    required this.img,
+    this.imgIsNet,
+    this.imgFix,
   });
 
   @override
   State<CxImageCard> createState() => _CxImageCardState();
-  List<Widget>? topLeft;
-  List<Widget>? topRight;
-  List<Widget>? bottomLeft;
-  List<Widget>? bottomRight;
-  String? title;
-  String? subtitle;
-  double? cornerHeight;
+  final List<Widget>? topLeft;
+  final List<Widget>? topRight;
+  final List<Widget>? bottomLeft;
+  final List<Widget>? bottomRight;
+  final String? title;
+  final String? subtitle;
+  final double? cornerHeight;
+  final String? img;
+  final bool? imgIsNet;
+  final BoxFit? imgFix;
 }
 
 class _CxImageCardState extends State<CxImageCard> {
@@ -40,6 +46,13 @@ class _CxImageCardState extends State<CxImageCard> {
   }
 
   Widget buildCover() {
+    ImageProvider<Object> img;
+    if (widget.imgIsNet ?? false) {
+      img = NetworkImage(widget.img ?? "");
+    } else {
+      img = AssetImage(widget.img ?? "");
+    }
+
     return Expanded(
       child: Stack(
         children: [
@@ -49,10 +62,10 @@ class _CxImageCardState extends State<CxImageCard> {
 
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              child: const Image(
+              child: Image(
                 width: double.infinity,
-                fit: BoxFit.cover,
-                image: AssetImage("assets/img/card-img-01.jpg"),
+                fit: widget.imgFix ?? BoxFit.cover,
+                image: img,
               ),
             ),
           ),
