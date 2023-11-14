@@ -1,6 +1,6 @@
 # flutter_cxui
 
-A new Flutter ui components.
+一个新的flutter界面组件库，及flutter应用界面库。
 
 ## 组件预览
 
