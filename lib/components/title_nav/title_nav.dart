@@ -50,7 +50,9 @@ class _CxTitleNavState extends State<CxTitleNav> {
               widget.items[index],
               style: TextStyle(
                 fontSize: (current == index) ? (widget.selectSize ?? 20) : 14,
-                color: (current == index) ? Colors.white : theme.hintColor,
+                color: (current == index)
+                    ? Theme.of(context).cardTheme.color
+                    : theme.hintColor,
               ),
             ),
             Container(

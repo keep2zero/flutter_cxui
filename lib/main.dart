@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         "/app/movie/item": (context) => PageMovieItem(),
       },
       title: 'Flutter CXUI DEMO',
-      theme: ThemeData.dark(),
+      theme: ThemeData.light(),
       home: const MyHomePage(title: 'Flutter CXUI DEMO'),
     );
   }

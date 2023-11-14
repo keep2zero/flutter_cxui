@@ -32,6 +32,8 @@ class _CxPlaceGridState extends State<CxPlaceGrid> {
   }
 
   List<Widget> buildChild(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     if (widget.items != null) {
       List<Widget> widgets = [];
 
@@ -45,7 +47,7 @@ class _CxPlaceGridState extends State<CxPlaceGrid> {
               children: [
                 Icon(
                   item.icon,
-                  color: item.color ?? Colors.black,
+                  color: item.color ?? theme.cardTheme.color,
                   size: item.iconSize ?? 16,
                 ),
                 const SizedBox(
@@ -57,7 +59,7 @@ class _CxPlaceGridState extends State<CxPlaceGrid> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: item.titleSize ?? 10,
-                    color: item.color ?? Colors.black,
+                    color: item.color ?? theme.cardTheme.color,
                   ),
                 ),
               ],

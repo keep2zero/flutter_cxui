@@ -57,8 +57,7 @@ class CxCard extends StatelessWidget {
         minHeight: minHeight ?? 80,
       ),
       decoration: BoxDecoration(
-        color:
-            bgColor ?? Theme.of(context).colorScheme.background.withAlpha(200),
+        color: bgColor ?? Theme.of(context).colorScheme.background,
         borderRadius: BorderRadius.all(
           Radius.circular(radius ?? 0),
         ),
@@ -93,7 +92,7 @@ class CxCard extends StatelessWidget {
           title ?? "",
           style: TextStyle(
             fontSize: titleSize ?? 14,
-            color: titleColor ?? theme.primaryColor,
+            color: titleColor ?? theme.cardTheme.color,
           ),
         ),
       );
@@ -144,6 +143,7 @@ class CxCard extends StatelessWidget {
   Widget buildFt() {
     return footWidget ??
         Container(
+          color: Colors.amber,
           constraints:
               foot != null ? const BoxConstraints(minHeight: 20) : null,
           child: foot,
