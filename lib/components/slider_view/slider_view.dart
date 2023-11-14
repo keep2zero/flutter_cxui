@@ -168,7 +168,6 @@ class _SliderViewState extends State<CxSliderView> {
 
   @override
   void deactivate() {
-    // TODO: implement deactivate
     super.deactivate();
 
     timer.cancel();
