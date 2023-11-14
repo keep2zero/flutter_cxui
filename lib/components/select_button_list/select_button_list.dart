@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class CxSelectButtonList extends StatefulWidget {
-  const CxSelectButtonList(
-      {super.key,
-      required this.data,
-      required this.onChange,
-      this.size,
-      this.boxColor = Colors.black,
-      this.color = Colors.white,
-      this.bgColor = Colors.white38,
-      this.selectColor = Colors.white,
-      this.selectBgColor = Colors.green,
-      this.defaultSelect = 0,
-      this.topRight,
-      this.hasTopRight});
+  const CxSelectButtonList({
+    super.key,
+    required this.data,
+    required this.onChange,
+    this.size,
+    this.boxColor = Colors.black,
+    this.color = Colors.white,
+    this.bgColor = Colors.white38,
+    this.selectColor = Colors.white,
+    this.selectBgColor = Colors.green,
+    this.defaultSelect = 0,
+    this.topRight,
+    this.hasTopRight,
+  });
 
   //数据
   final List<String> data;
