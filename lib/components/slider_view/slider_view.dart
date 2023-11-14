@@ -34,17 +34,15 @@ class _SliderViewState extends State<CxSliderView> {
 
   Timer startTimer() {
     return Timer.periodic(Duration(seconds: 5), (timer) {
-      setState(() {
-        if (index >= widget.objects.length - 1) {
-          setState(() {
-            index = 0;
-          });
-        } else {
-          setState(() {
-            index++;
-          });
-        }
-      });
+      if (index >= widget.objects.length - 1) {
+        setState(() {
+          index = 0;
+        });
+      } else {
+        setState(() {
+          index++;
+        });
+      }
     });
   }
 
