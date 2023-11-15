@@ -16,6 +16,8 @@ class PagePlaceGrid extends StatelessWidget {
         child: Column(
           children: [
             CxCard(
+              shadow: true,
+              shadowColor: CxConfig.primary.withAlpha(30),
               bgColor: CxConfig.white,
               radius: 16,
               body: CxPlaceGrid(

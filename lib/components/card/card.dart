@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
 class CxCard extends StatelessWidget {
-  CxCard({
+  const CxCard({
     super.key,
     this.radius,
     this.margin,
+    this.shadow,
+    this.boxShadow,
+    this.shadowColor,
     this.title,
     this.titleColor,
     this.subtitle,
     this.subtitleColor,
     this.titleSize,
     this.subtitleSize,
+    this.titleWidget,
     this.foot,
     required this.body,
     this.actions,
@@ -27,26 +31,29 @@ class CxCard extends StatelessWidget {
     this.hdSplitWidget,
   });
 
-  double? radius;
-  EdgeInsetsGeometry? margin;
+  final double? radius;
+  final EdgeInsetsGeometry? margin;
+  final BoxShadow? boxShadow;
+  final Color? shadowColor;
+  final bool? shadow;
 
-  Widget body;
-  Widget? foot;
-  Color? hdBgColor;
-  EdgeInsetsGeometry? hdPadding;
+  final Widget body;
+  final Widget? foot;
+  final Color? hdBgColor;
+  final EdgeInsetsGeometry? hdPadding;
 
-  Widget? titleWidget;
-  String? title;
-  String? subtitle;
-  double? titleSize;
-  double? subtitleSize;
-  double? minHeight;
-  Color? bgColor;
-  Color? titleColor;
-  Color? subtitleColor;
-  List<Widget>? actions;
+  final Widget? titleWidget;
+  final String? title;
+  final String? subtitle;
+  final double? titleSize;
+  final double? subtitleSize;
+  final double? minHeight;
+  final Color? bgColor;
+  final Color? titleColor;
+  final Color? subtitleColor;
+  final List<Widget>? actions;
 
-  Widget? footWidget;
+  final Widget? footWidget;
 
   final Widget? hdSplitWidget;
   final bool? hdSplit;
@@ -82,6 +89,22 @@ class CxCard extends StatelessWidget {
       children.add(buildFt());
     }
 
+    final shadows = <BoxShadow>[];
+    if (boxShadow == null && shadow != null && shadow!) {
+      shadows.add(
+        BoxShadow(
+          offset: const Offset(0, 2),
+          blurRadius: 3,
+          spreadRadius: 1,
+          color: shadowColor ?? Colors.grey.withAlpha(160),
+        ),
+      );
+    }
+
+    if (boxShadow != null) {
+      shadows.add(boxShadow!);
+    }
+
     Widget box = Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       constraints: BoxConstraints(
@@ -92,6 +115,7 @@ class CxCard extends StatelessWidget {
         borderRadius: BorderRadius.all(
           Radius.circular(radius ?? 0),
         ),
+        boxShadow: shadows,
       ),
       child: Column(
         children: children,
