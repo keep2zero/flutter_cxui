@@ -27,11 +27,25 @@ class PagePlaceGrid extends StatelessWidget {
               height: 20,
             ),
             CxCard(
+              // minHeight: 200,
               radius: 16,
               hdBgColor: CxConfig.white,
+              hdPadding:
+                  const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               bgColor: CxConfig.white,
+              hdSplit: true,
+              hdSplitMargin: const EdgeInsets.symmetric(horizontal: 16),
               title: "更多功能",
+
+              actions: [
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: CxConfig.primary.withAlpha(160),
+                  size: 16,
+                ),
+              ],
               body: CxPlaceGrid(
+                height: 130,
                 cols: 4,
                 items: pgi_02,
               ),
