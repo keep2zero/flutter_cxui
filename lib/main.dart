@@ -6,6 +6,7 @@ import 'package:flutter_cxui/pages/page_card.dart';
 import 'package:flutter_cxui/pages/page_icon_button.dart';
 import 'package:flutter_cxui/pages/page_place_grid.dart';
 import 'package:flutter_cxui/pages/page_select_button_list.dart';
+import 'package:ionicons/ionicons.dart';
 
 import 'pages/page_image_card.dart';
 
@@ -100,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // shadowColor: Colors.transparent,
         backgroundColor: CxConfig.primary,
         clipBehavior: Clip.antiAlias,
-        leading: const Icon(Icons.home, size: 25),
+        leading: const Icon(Ionicons.apps_outline, size: 20),
 
         title: Text(widget.title),
         actions: const [
