@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: const [
           Icon(
-            Icons.message,
+            Ionicons.notifications_outline,
             size: 20,
           ),
           SizedBox(
