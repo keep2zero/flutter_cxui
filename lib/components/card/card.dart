@@ -18,6 +18,13 @@ class CxCard extends StatelessWidget {
     this.minHeight,
     this.footWidget,
     this.hdBgColor,
+    this.hdPadding,
+    //
+    this.hdSplit,
+    this.hdSplitColor,
+    this.hdSplitHeight,
+    this.hdSplitMargin,
+    this.hdSplitWidget,
   });
 
   double? radius;
@@ -26,6 +33,8 @@ class CxCard extends StatelessWidget {
   Widget body;
   Widget? foot;
   Color? hdBgColor;
+  EdgeInsetsGeometry? hdPadding;
+
   Widget? titleWidget;
   String? title;
   String? subtitle;
@@ -38,6 +47,13 @@ class CxCard extends StatelessWidget {
   List<Widget>? actions;
 
   Widget? footWidget;
+
+  final Widget? hdSplitWidget;
+  final bool? hdSplit;
+  final double? hdSplitHeight;
+  final EdgeInsetsGeometry? hdSplitMargin;
+  final Color? hdSplitColor;
+
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [];
@@ -45,6 +61,21 @@ class CxCard extends StatelessWidget {
     if (title != null || actions != null) {
       children.add(buildHd(context));
     }
+
+    if (hdSplitWidget != null) {
+      children.add(hdSplitWidget!);
+    }
+
+    if (hdSplitWidget == null && hdSplit != null && hdSplit!) {
+      children.add(
+        Container(
+          margin: hdSplitMargin,
+          height: hdSplitHeight ?? 1,
+          color: hdSplitColor ?? Colors.grey[100],
+        ),
+      );
+    }
+
     children.add(buildBd(context));
 
     if (foot != null) {
@@ -115,7 +146,7 @@ class CxCard extends StatelessWidget {
     }
     return titleWidget ??
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: hdPadding ?? const EdgeInsets.all(8),
           color: hdBgColor ?? Colors.transparent,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
