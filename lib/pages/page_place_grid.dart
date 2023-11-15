@@ -19,11 +19,12 @@ class PagePlaceGrid extends StatelessWidget {
               bgColor: CxConfig.white,
               radius: 16,
               body: CxPlaceGrid(
+                height: 60,
                 cols: 4,
                 items: pgi_01,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CxCard(
