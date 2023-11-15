@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CxPlaceGrid extends StatefulWidget {
-  const CxPlaceGrid(
-      {super.key, this.items, this.cols, this.space, this.height, this.ratio});
+  const CxPlaceGrid({
+    super.key,
+    this.items,
+    this.cols,
+    this.space,
+    this.height,
+    this.ratio,
+    this.bgColor,
+  });
 
   @override
   State<CxPlaceGrid> createState() => _CxPlaceGridState();
@@ -12,12 +19,14 @@ class CxPlaceGrid extends StatefulWidget {
   final double? space;
   final double? height;
   final double? ratio;
+  final Color? bgColor;
 }
 
 class _CxPlaceGridState extends State<CxPlaceGrid> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: widget.bgColor ?? Colors.transparent,
       height: widget.height ?? 80,
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -47,7 +56,7 @@ class _CxPlaceGridState extends State<CxPlaceGrid> {
               children: [
                 Icon(
                   item.icon,
-                  color: item.color ?? theme.cardTheme.color,
+                  color: item.iconColor ?? item.color ?? theme.cardTheme.color,
                   size: item.iconSize ?? 16,
                 ),
                 const SizedBox(
@@ -78,7 +87,14 @@ class PlaceGridItem {
   String? title;
   double? titleSize;
   Color? color;
+  Color? iconColor;
   double? iconSize;
-  PlaceGridItem(
-      {this.icon, this.title, this.titleSize, this.color, this.iconSize});
+  PlaceGridItem({
+    this.icon,
+    this.title,
+    this.titleSize,
+    this.color,
+    this.iconSize,
+    this.iconColor,
+  });
 }
