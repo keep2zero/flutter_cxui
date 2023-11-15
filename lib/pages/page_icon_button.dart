@@ -1,70 +1,86 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter_cxui/components/card/card.dart';
 import 'package:flutter_cxui/components/icon_button/icon_button.dart';
 
+import 'package:flutter_cxui/config.dart';
+import 'package:flutter_cxui/data/icon_button_data.dart';
+import 'package:ionicons/ionicons.dart';
+
 class PageIconButton extends StatelessWidget {
-  PageIconButton({super.key});
+  const PageIconButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Icon Button")),
-      body: CxCard(
-        body: LayoutBuilder(builder: (context, BoxConstraints cons) {
-          return Container(
-            constraints: const BoxConstraints(maxHeight: 300),
-            child: GridView(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 1,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
+      appBar: AppBar(
+        title: const Text("Icon Button"),
+      ),
+      body: buildBody(context),
+    );
+  }
+
+  Widget buildBody(BuildContext context) {
+    return Column(
+      children: [
+        buildCard01(),
+        buildCard02(),
+      ],
+    );
+  }
+
+  Widget buildCard01() {
+    return CxCard(
+      shadow: true,
+      radius: 10,
+      hdPadding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
+      bgColor: CxConfig.white,
+      hdBgColor: CxConfig.white,
+      title: "默认",
+      hdSplit: true,
+      body: Wrap(
+        children: cxiconlist
+            .map(
+              (e) => Container(
+                margin: const EdgeInsets.all(10),
+                child: CxIconButton(
+                  icon: e,
+                  size: 26,
+                ),
               ),
-              children: [
-                Container(
-                  color: Colors.pink,
-                  child: CxIconButton(
-                    color: Colors.white,
-                    icon: Icons.image,
-                    size: 20,
-                  ),
+            )
+            .toList(),
+      ),
+    );
+  }
+
+  Widget buildCard02() {
+    return CxCard(
+      shadow: true,
+      radius: 10,
+      hdPadding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
+      bgColor: CxConfig.white,
+      hdBgColor: CxConfig.white,
+      title: "背景",
+      hdSplit: true,
+      body: Wrap(
+        children: cxiconlist
+            .map(
+              (e) => Container(
+                margin: const EdgeInsets.all(10),
+                child: CxIconButton(
+                  icon: e,
+                  size: 24,
+                  bgColor: CxConfig.primary,
+                  color: CxConfig.white,
+                  focusColor: CxConfig.grey,
+                  hoverColor: CxConfig.highlight,
                 ),
-                Container(
-                  color: Colors.blue,
-                  child: CxIconButton(
-                    color: Colors.white60,
-                    icon: Icons.yard_outlined,
-                    size: 30,
-                  ),
-                ),
-                Container(
-                  color: Colors.amber,
-                  child: CxIconButton(
-                    color: Colors.red,
-                    icon: Icons.dangerous,
-                    size: 50,
-                  ),
-                ),
-                Container(
-                  color: Colors.red,
-                  child: CxIconButton(
-                    color: Colors.lime,
-                    icon: Icons.warning,
-                    size: 30,
-                  ),
-                ),
-                Container(
-                  color: Colors.cyanAccent,
-                  child: CxIconButton(
-                    icon: Icons.ac_unit,
-                    size: 36,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }),
+              ),
+            )
+            .toList(),
       ),
     );
   }
