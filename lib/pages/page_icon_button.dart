@@ -75,7 +75,7 @@ class PageIconButton extends StatelessWidget {
                   size: 24,
                   bgColor: CxConfig.primary,
                   color: CxConfig.white,
-                  focusColor: CxConfig.grey,
+                  focusColor: CxConfig.highlight.withAlpha(200),
                   hoverColor: CxConfig.highlight,
                 ),
               ),
