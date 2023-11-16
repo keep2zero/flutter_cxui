@@ -6,6 +6,7 @@ import 'package:flutter_cxui/pages/page_card.dart';
 import 'package:flutter_cxui/pages/page_icon_button.dart';
 import 'package:flutter_cxui/pages/page_place_grid.dart';
 import 'package:flutter_cxui/pages/page_select_button_list.dart';
+import 'package:flutter_cxui/pages/page_title_nav.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'pages/page_image_card.dart';
@@ -50,13 +51,14 @@ class MyApp extends StatelessWidget {
 
       // },
       routes: {
-        "/place_grid": (context) => PagePlaceGrid(),
-        "/icon_button": (context) => PageIconButton(),
+        "/place_grid": (context) => const PagePlaceGrid(),
+        "/icon_button": (context) => const PageIconButton(),
         "/select_button_list": (context) => const PageSelectButtonList(),
         "/image_card": (context) => const PageImageCard(),
+        "/title_nav": (context) => const PageTitleNav(),
         "/card": (context) => const PageCard(),
-        "/app/movie/home": (context) => PageMovieHome(),
-        "/app/movie/item": (context) => PageMovieItem(),
+        "/app/movie/home": (context) => const PageMovieHome(),
+        "/app/movie/item": (context) => const PageMovieItem(),
       },
       title: 'CXUI',
 
@@ -88,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
     RouteItem("/place_grid", "Place Grid"),
     RouteItem("/icon_button", "Icon Button"),
     RouteItem("/select_button_list", "Select Button List"),
+    RouteItem("/title_nav", "Title Nav"),
     RouteItem("/image_card", "ImageCard"),
     RouteItem("/card", "Card"),
     RouteItem("/slider_view", "Slider View"),
@@ -102,8 +105,11 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: CxConfig.primary,
         clipBehavior: Clip.antiAlias,
         leading: const Icon(Ionicons.apps_outline, size: 20),
-
-        title: Text(widget.title),
+        centerTitle: true,
+        title: Image.asset(
+          "assets/img/cx-logo.png",
+          width: 60,
+        ),
         actions: const [
           Icon(
             Ionicons.notifications_outline,
@@ -129,20 +135,31 @@ class _MyHomePageState extends State<MyHomePage> {
                   bottomRight: Radius.circular(20),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Row(
                 children: [
-                  const Text(
-                    "Hello CXUI !",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    "a new flutter ui",
-                    style: TextStyle(color: Colors.grey[300]),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Hi CXUI",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white.withAlpha(230),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "A New Flutter UI",
+                        style: TextStyle(
+                          color: CxConfig.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

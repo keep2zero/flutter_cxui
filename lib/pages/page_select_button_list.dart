@@ -18,45 +18,47 @@ class _PageSelectButtonListState extends State<PageSelectButtonList> {
       appBar: AppBar(
         title: const Text("Select Button List"),
       ),
-      body: Column(
-        children: [
-          CxCard(
-            margin: const EdgeInsets.all(10),
-            radius: 15,
-            shadow: true,
-            title: "默认",
-            body: Container(
-              child: defaultList(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CxCard(
+              margin: const EdgeInsets.all(10),
+              radius: 15,
+              shadow: true,
+              title: "默认",
+              body: Container(
+                child: defaultList(),
+              ),
             ),
-          ),
-          CxCard(
-            margin: const EdgeInsets.all(10),
-            radius: 15,
-            shadow: true,
-            title: "颜色",
-            body: Container(
-              child: normalList(),
+            CxCard(
+              margin: const EdgeInsets.all(10),
+              radius: 15,
+              shadow: true,
+              title: "颜色",
+              body: Container(
+                child: normalList(),
+              ),
             ),
-          ),
-          CxCard(
-            margin: const EdgeInsets.all(10),
-            radius: 15,
-            shadow: true,
-            title: "带右上角",
-            body: Container(
-              child: starList(),
+            CxCard(
+              margin: const EdgeInsets.all(10),
+              radius: 15,
+              shadow: true,
+              title: "带右上角",
+              body: Container(
+                child: starList(),
+              ),
             ),
-          ),
-          CxCard(
-            margin: const EdgeInsets.all(10),
-            radius: 15,
-            shadow: true,
-            title: "多文字的",
-            body: Container(
-              child: multiList(),
+            CxCard(
+              margin: const EdgeInsets.all(10),
+              radius: 15,
+              shadow: true,
+              title: "多文字的",
+              body: Container(
+                child: multiList(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

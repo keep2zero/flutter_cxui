@@ -16,7 +16,9 @@ class PageIconButton extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Icon Button"),
       ),
-      body: buildBody(context),
+      body: SingleChildScrollView(
+        child: buildBody(context),
+      ),
     );
   }
 

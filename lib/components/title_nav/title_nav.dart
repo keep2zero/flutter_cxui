@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 
 class CxTitleNav extends StatefulWidget {
-  CxTitleNav({super.key, required this.items, this.select, this.selectSize});
+  const CxTitleNav({
+    super.key,
+    required this.items,
+    this.size,
+    this.select,
+    this.selectSize,
+    this.color,
+    this.selectColor,
+  });
 
   @override
   State<CxTitleNav> createState() => _CxTitleNavState();
 
-  List<String> items;
-  int? select;
-  double? selectSize;
+  final List<String> items;
+  final double? size;
+  final int? select;
+  final double? selectSize;
+
+  final Color? color;
+  final Color? selectColor;
 }
 
 class _CxTitleNavState extends State<CxTitleNav> {
@@ -33,6 +45,9 @@ class _CxTitleNavState extends State<CxTitleNav> {
 
   Widget? itemBuilder(BuildContext context, int index) {
     ThemeData theme = Theme.of(context);
+
+    Color selectColor = widget.selectColor ?? Colors.black87;
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -41,7 +56,7 @@ class _CxTitleNavState extends State<CxTitleNav> {
       },
       child: Container(
         //color: Colors.amber,
-        margin: EdgeInsets.only(left: 8, right: 8),
+        margin: const EdgeInsets.only(left: 8, right: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,17 +64,21 @@ class _CxTitleNavState extends State<CxTitleNav> {
             Text(
               widget.items[index],
               style: TextStyle(
-                fontSize: (current == index) ? (widget.selectSize ?? 20) : 14,
+                fontSize: (current == index)
+                    ? (widget.selectSize ?? 20)
+                    : widget.size ?? 14,
                 color: (current == index)
-                    ? Theme.of(context).cardTheme.color
-                    : theme.hintColor,
+                    ? selectColor
+                    : widget.color ?? theme.hintColor,
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 5),
+              margin: const EdgeInsets.only(top: 5),
               width: 20,
               height: 2,
-              color: (current == index) ? theme.focusColor : Colors.transparent,
+              color: (current == index)
+                  ? selectColor.withAlpha(100)
+                  : Colors.transparent,
             ),
           ],
         ),
