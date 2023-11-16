@@ -6,6 +6,7 @@ import 'package:flutter_cxui/pages/page_card.dart';
 import 'package:flutter_cxui/pages/page_icon_button.dart';
 import 'package:flutter_cxui/pages/page_place_grid.dart';
 import 'package:flutter_cxui/pages/page_select_button_list.dart';
+import 'package:flutter_cxui/pages/page_slider_view.dart';
 import 'package:flutter_cxui/pages/page_title_nav.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         "/image_card": (context) => const PageImageCard(),
         "/title_nav": (context) => const PageTitleNav(),
         "/card": (context) => const PageCard(),
+        "/slider_view": (context) => const PageSliderView(),
         "/app/movie/home": (context) => const PageMovieHome(),
         "/app/movie/item": (context) => const PageMovieItem(),
       },

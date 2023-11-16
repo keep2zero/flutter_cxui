@@ -10,10 +10,10 @@
 
 |||
 |--|--|
-|![home](assets/static/list.png)|![select_button_list](assets/static/place_grid.png)|
-|![home](assets/static/icon_button.png)|![select_button_list](assets/static/select_button_list.png)|
-|![home](assets/static/image_card.png)|![select_button_list](assets/static/card.png)|
-|![home](assets/static/title_nav.png)||
+|![home](assets/static/list.png)|![place_grid](assets/static/place_grid.png)|
+|![icon_button](assets/static/icon_button.png)|![select_button_list](assets/static/select_button_list.png)|
+|![image_card](assets/static/image_card.png)|![card](assets/static/card.png)|
+|![title_nav](assets/static/title_nav.png)|![slider](assets/static/slider.jpg)|
 
 
 ## 实例预览

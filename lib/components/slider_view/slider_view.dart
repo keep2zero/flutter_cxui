@@ -163,7 +163,12 @@ class _SliderViewState extends State<CxSliderView> {
   }
 
   Widget buildTitle() {
-    return Text(widget.objects[index].objName);
+    return Text(
+      widget.objects[index].objName,
+      style: TextStyle(
+        color: Colors.white,
+      ),
+    );
   }
 
   @override
