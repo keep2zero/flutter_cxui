@@ -9,6 +9,7 @@ class PageSliderView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Slider View")),
       body: CxSliderView(
+        height: 150,
         onTap: (SliderObject obj, int index) {
           print("click the item $index");
         },

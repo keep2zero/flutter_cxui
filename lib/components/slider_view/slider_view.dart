@@ -2,20 +2,30 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+class SliderObject {
+  String objName;
+  String objCover;
+  SliderObject(this.objName, this.objCover);
+}
+
 class CxSliderView extends StatefulWidget {
-  const CxSliderView({super.key, required this.objects, this.onTap});
+  const CxSliderView({
+    super.key,
+    required this.objects,
+    this.onTap,
+    this.height,
+    this.titleSize,
+    this.titleColor,
+  });
 
   @override
   State<CxSliderView> createState() => _SliderViewState();
 
   final List<SliderObject> objects;
   final void Function(SliderObject, int)? onTap;
-}
-
-class SliderObject {
-  String objName;
-  String objCover;
-  SliderObject(this.objName, this.objCover);
+  final double? height;
+  final Color? titleColor;
+  final double? titleSize;
 }
 
 class _SliderViewState extends State<CxSliderView> {
@@ -48,7 +58,7 @@ class _SliderViewState extends State<CxSliderView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180,
+      height: widget.height ?? 180,
       margin: const EdgeInsets.all(10),
       child: Stack(
         children: [
@@ -63,12 +73,16 @@ class _SliderViewState extends State<CxSliderView> {
                 onHorizontalDragEnd: (DragEndDetails details) {
                   timer = startTimer();
                   if (dragdistance.abs() > 60) {
-                    if (dragdistance < 0 && index < widget.objects.length - 1) {
+                    if (dragdistance < 0) {
+                      if (index >= widget.objects.length - 1) {
+                        index = -1;
+                      }
                       setState(() {
                         index++;
                       });
                     }
-                    if (dragdistance > 0 && index > 0) {
+                    if (dragdistance > 0) {
+                      if (index <= 0) index = widget.objects.length;
                       setState(() {
                         index--;
                       });
@@ -166,7 +180,8 @@ class _SliderViewState extends State<CxSliderView> {
     return Text(
       widget.objects[index].objName,
       style: TextStyle(
-        color: Colors.white,
+        fontSize: widget.titleSize ?? 12,
+        color: widget.titleColor ?? Colors.white,
       ),
     );
   }
