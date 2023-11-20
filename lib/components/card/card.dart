@@ -185,13 +185,15 @@ class CxCard extends StatelessWidget {
     final theme = Theme.of(context);
     final hds = <Widget>[];
 
-    const titles = Column(
+    final titleChidren = <Widget>[];
+    final titles = Column(
       // mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [],
+      children: titleChidren,
     );
+
     if (title != null) {
-      titles.children.add(
+      titleChidren.add(
         Text(
           title ?? "",
           style: TextStyle(
@@ -203,7 +205,7 @@ class CxCard extends StatelessWidget {
     }
 
     if (subtitle != null) {
-      titles.children.add(
+      titleChidren.add(
         Text(
           subtitle ?? "",
           style: TextStyle(
@@ -214,7 +216,7 @@ class CxCard extends StatelessWidget {
       );
     }
 
-    if (titles.children.isNotEmpty) {
+    if (titleChidren.isNotEmpty) {
       hds.add(titles);
     }
     return titleWidget ??

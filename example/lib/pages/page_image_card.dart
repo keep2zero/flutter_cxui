@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cxui/components/image_card/image_card.dart';
+import 'package:flutter_cxui/cxui.dart';
 
 class PageImageCard extends StatelessWidget {
   const PageImageCard({super.key});

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cxui/components/card/card.dart';
-import 'package:flutter_cxui/components/image_card/image_card.dart';
-import 'package:flutter_cxui/components/select_button_list/select_button_list.dart';
-import 'package:flutter_cxui/components/title_nav/title_nav.dart';
+import 'package:flutter_cxui/cxui.dart';
 
 class PageMovieItem extends StatelessWidget {
   const PageMovieItem({super.key});

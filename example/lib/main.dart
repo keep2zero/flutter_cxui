@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cxui/config.dart';
-import 'package:flutter_cxui/pages/example/movie/page_movie_home.dart';
-import 'package:flutter_cxui/pages/example/movie/page_movie_item.dart';
-import 'package:flutter_cxui/pages/page_card.dart';
-import 'package:flutter_cxui/pages/page_icon_button.dart';
-import 'package:flutter_cxui/pages/page_place_grid.dart';
-import 'package:flutter_cxui/pages/page_select_button_list.dart';
-import 'package:flutter_cxui/pages/page_slider_view.dart';
-import 'package:flutter_cxui/pages/page_title_nav.dart';
+import './config.dart';
+import './pages/app/movie/page_movie_home.dart';
+import './pages/app/movie/page_movie_item.dart';
+import './pages/page_card.dart';
+import './pages/page_icon_button.dart';
+import './pages/page_place_grid.dart';
+import './pages/page_select_button_list.dart';
+import './pages/page_slider_view.dart';
+import './pages/page_title_nav.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'pages/page_image_card.dart';

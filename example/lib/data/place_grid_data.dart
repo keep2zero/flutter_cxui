@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cxui/components/place_grid/place_grid.dart';
-import 'package:flutter_cxui/config.dart';
+import 'package:flutter_cxui/cxui.dart';
+
 import 'package:ionicons/ionicons.dart';
+
+import '../config.dart';
 
 List<PlaceGridItem> pgi_01 = [
   PlaceGridItem(

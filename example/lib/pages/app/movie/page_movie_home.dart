@@ -1,10 +1,7 @@
 // import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_cxui/components/card/card.dart';
-import 'package:flutter_cxui/components/icon_button/icon_button.dart';
-import 'package:flutter_cxui/components/image_card/image_card.dart';
-import 'package:flutter_cxui/components/slider_view/slider_view.dart';
-import 'package:flutter_cxui/components/title_nav/title_nav.dart';
+import 'package:flutter_cxui/cxui.dart';
 
 class PageMovieHome extends StatelessWidget {
   const PageMovieHome({super.key});

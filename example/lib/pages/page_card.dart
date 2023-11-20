@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cxui/components/card/card.dart';
 import 'package:flutter_cxui/components/icon_button/icon_button.dart';
-import 'package:flutter_cxui/config.dart';
+import '../config.dart';
 
 class PageCard extends StatefulWidget {
   const PageCard({super.key});

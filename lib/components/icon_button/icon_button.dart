@@ -84,7 +84,7 @@ class _CxIconButtonState extends State<CxIconButton> {
             color: color,
           ),
           onTap: () {
-            widget.click != null ? widget.click!() : ();
+            if (widget.click != null) widget.click!();
           },
         ),
       ),

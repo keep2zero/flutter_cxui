@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cxui/components/card/card.dart';
-import 'package:flutter_cxui/config.dart';
-
-import '../components/select_button_list/select_button_list.dart';
+import 'package:flutter_cxui/cxui.dart';
+import '../config.dart';
 
 class PageSelectButtonList extends StatefulWidget {
   const PageSelectButtonList({super.key});

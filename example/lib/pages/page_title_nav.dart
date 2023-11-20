@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cxui/components/card/card.dart';
-import 'package:flutter_cxui/components/title_nav/title_nav.dart';
-import 'package:flutter_cxui/config.dart';
+import 'package:flutter_cxui/cxui.dart';
+import '../config.dart';
 
 class PageTitleNav extends StatelessWidget {
   const PageTitleNav({super.key});

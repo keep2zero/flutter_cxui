@@ -36,13 +36,12 @@ class _SliderViewState extends State<CxSliderView> {
   late Timer timer;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     timer = startTimer();
   }
 
   Timer startTimer() {
-    return Timer.periodic(Duration(seconds: 5), (timer) {
+    return Timer.periodic(const Duration(seconds: 5), (timer) {
       if (index >= widget.objects.length - 1) {
         setState(() {
           index = 0;
@@ -158,7 +157,7 @@ class _SliderViewState extends State<CxSliderView> {
   Widget itemSliderImage(BuildContext context, int ix) {
     return GestureDetector(
       onTap: () {
-        widget.onTap != null ? widget.onTap!(widget.objects[ix], ix) : ();
+        if (widget.onTap != null) widget.onTap!(widget.objects[ix], ix);
       },
       child: Container(
         // height: 180,

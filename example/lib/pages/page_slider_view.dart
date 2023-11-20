@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cxui/components/slider_view/slider_view.dart';
+import 'package:flutter_cxui/cxui.dart';
 
 class PageSliderView extends StatelessWidget {
   const PageSliderView({super.key});
