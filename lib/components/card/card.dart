@@ -185,7 +185,7 @@ class CxCard extends StatelessWidget {
     final theme = Theme.of(context);
     final hds = <Widget>[];
 
-    final titles = Column(
+    const titles = Column(
       // mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [],

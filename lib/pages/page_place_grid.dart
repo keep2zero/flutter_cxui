@@ -10,7 +10,7 @@ class PagePlaceGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("宫格")),
+      appBar: AppBar(title: const Text("宫格")),
       body: Container(
         padding: const EdgeInsets.all(20.0),
         child: Column(

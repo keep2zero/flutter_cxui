@@ -77,7 +77,7 @@ class _PageSelectButtonListState extends State<PageSelectButtonList> {
       size: 50,
       data: const <String>["1", "2", "3", "4", "5", "6", "7", "8", "9"],
       onChange: (index, item) {
-        print("$index $item");
+        // print("$index $item");
       },
     );
   }
@@ -90,7 +90,7 @@ class _PageSelectButtonListState extends State<PageSelectButtonList> {
       size: 50,
       data: const <String>["1", "2", "3", "4", "5", "6", "7", "8", "9"],
       onChange: (index, item) {
-        print("$index $item");
+        // print("$index $item");
       },
     );
   }
@@ -100,7 +100,7 @@ class _PageSelectButtonListState extends State<PageSelectButtonList> {
       size: 50,
       data: const <String>["1", "2", "3", "4", "5", "6", "7", "8", "9"],
       onChange: (index, item) {
-        print("$index $item");
+        // print("$index $item");
       },
     );
   }
@@ -109,7 +109,7 @@ class _PageSelectButtonListState extends State<PageSelectButtonList> {
     return CxSelectButtonList(
       data: const <String>["1 中文说唱巅峰", "2", "3", "4", "5", "6", "7", "8", "9"],
       onChange: (index, item) {
-        print("$index $item");
+        // print("$index $item");
       },
     );
   }

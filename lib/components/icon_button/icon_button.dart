@@ -33,7 +33,7 @@ class _CxIconButtonState extends State<CxIconButton> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    // ThemeData theme = Theme.of(context);
 
     late Color color;
 

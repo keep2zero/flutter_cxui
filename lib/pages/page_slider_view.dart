@@ -7,11 +7,11 @@ class PageSliderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Slider View")),
+      appBar: AppBar(title: const Text("Slider View")),
       body: CxSliderView(
         height: 150,
         onTap: (SliderObject obj, int index) {
-          print("click the item $index");
+          // print("click the item $index");
         },
         objects: [
           SliderObject("海豹看看",
