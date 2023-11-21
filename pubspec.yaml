@@ -1,7 +1,7 @@
 name: flutter_cxui
-description: A new Flutter UI project.
+description: flutter_cui是一个基于Flutter框架的UI工具包，开发在Material框架下。它提供了丰富的可重用组件和样式， 它可以帮助开发者快速构建高性能、高保真度、高一致性的跨平台应用程序。
 
-version: 1.0.0+1
+version: 1.0.1
 homepage: https://keep2zero.github.io/docs/cxui
 repository: https://github.com/keep2zero/flutter_cxui
 publish_to: https://pub.dartlang.org

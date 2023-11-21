@@ -11,19 +11,19 @@ class PageMovieHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        actions: [
+        actions: const [
           CxIconButton(
             icon: Icons.gamepad_outlined,
             size: 28,
           ),
-          const SizedBox(
+          SizedBox(
             width: 10,
           ),
           CxIconButton(
             icon: Icons.card_travel,
             size: 28,
           ),
-          const SizedBox(
+          SizedBox(
             width: 10,
           ),
         ],
@@ -37,19 +37,9 @@ class PageMovieHome extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          CxTitleNav(
+          const CxTitleNav(
             select: 1,
-            items: const [
-              "NBA",
-              "首页",
-              "电视剧",
-              "动漫",
-              "电影",
-              "综艺节目",
-              "少儿",
-              "专题",
-              "奥运"
-            ],
+            items: ["NBA", "首页", "电视剧", "动漫", "电影", "综艺节目", "少儿", "专题", "奥运"],
           ),
           CxSliderView(
             onTap: (SliderObject obj, int index) {
@@ -90,7 +80,10 @@ class PageMovieHome extends StatelessWidget {
 
   Widget? itemBuilder(BuildContext context, int index) {
     return const CxImageCard(
-        title: "hello", subtitle: "test", img: "assets/img/card-img-01.jpg");
+      title: "hello",
+      subtitle: "test",
+      img: "assets/img/card-img-01.jpg",
+    );
   }
 
   Widget buildEnd(BuildContext context) {

@@ -1,5 +1,10 @@
 # FLUTTER CXUI
 
+## 1.0.1
+
+1. 修改项目结构
+2. 修复CxCard的const问题
+
 ## 1.0.0+1
 
 1. ICON BUTTON的完成
