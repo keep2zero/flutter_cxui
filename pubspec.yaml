@@ -4,7 +4,7 @@ description: flutter_cui是一个基于Flutter框架的UI工具包，开发在Ma
 version: 1.0.1
 homepage: https://keep2zero.github.io/docs/cxui
 repository: https://github.com/keep2zero/flutter_cxui
-publish_to: https://pub.dartlang.org
+#publish_to: https://pub.dartlang.org
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
