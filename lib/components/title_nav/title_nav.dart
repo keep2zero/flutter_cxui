@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 /// It likes component of the category list.
 ///
 /// Usage:
+///
 /// {@tool snippet}
 /// ```dart
 ///

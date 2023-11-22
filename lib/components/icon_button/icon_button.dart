@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 /// Icon Button Component.
 /// The Icon is too simple that gives it click event.
 /// The Icon has more properties. It includes icon, size, color, hoverColor, focusColor, padding, bgColor.
+///
 /// {@tool snippet}
 ///
 /// ```dart
