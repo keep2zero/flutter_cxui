@@ -1,5 +1,22 @@
 import 'package:flutter/material.dart';
 
+/// Place Grid Component.
+///
+/// {@tool snippet}
+/// ```dart
+/// CxPlaceGrid(
+///   items: [
+///     PlaceGridItem(icon:Icons.home, title: "Home")
+///   ],
+///   cols: 1,
+///   space: 10,
+///   height: 60,
+/// )
+/// ```
+/// {@end-tool}
+///
+/// the data of gird item. See [PlaceGridItem].
+///
 class CxPlaceGrid extends StatefulWidget {
   const CxPlaceGrid({
     super.key,
@@ -14,11 +31,22 @@ class CxPlaceGrid extends StatefulWidget {
   @override
   State<CxPlaceGrid> createState() => _CxPlaceGridState();
 
+  /// data of the component. It's a [List<PlaceGridItem>] object.
   final List<PlaceGridItem>? items;
+
+  /// show several columns. default is `1`.
   final int? cols;
+
+  /// the space between each item. default is `8`.
   final double? space;
+
+  /// height of the component. default is `80`.
   final double? height;
+
+  /// aspect ratio of the image. default is `1`.
   final double? ratio;
+
+  /// background color of the component. default is `transparent`.
   final Color? bgColor;
 }
 
@@ -82,13 +110,33 @@ class _CxPlaceGridState extends State<CxPlaceGrid> {
   }
 }
 
+/// item data of the Place Grid Component
+///
+/// ```dart
+/// PlaceGridItem(
+///   title: "item"
+///   icon: Icons.home,
+/// )
+/// ```
 class PlaceGridItem {
+  /// icon data can be [Icons] or other icon libaries.
   IconData? icon;
+
+  /// title of the item.
   String? title;
+
+  /// title size.
   double? titleSize;
+
+  /// color of the title.
   Color? color;
+
+  /// color of the icon.
   Color? iconColor;
+
+  /// size of the icon.
   double? iconSize;
+
   PlaceGridItem({
     this.icon,
     this.title,

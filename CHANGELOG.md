@@ -1,5 +1,9 @@
 # FLUTTER CXUI
 
+## 1.0.1+1
+
+  Improve documentation comments for main classes.
+
 ## 1.0.1
 
 1. 修改项目结构

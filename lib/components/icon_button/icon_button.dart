@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// Icon Button Component.
+/// The Icon is too simple that gives it click event.
+/// The Icon has more properties. It includes icon, size, color, hoverColor, focusColor, padding, bgColor.
+/// {@tool snippet}
+///
+/// ```dart
+/// CxIconButton(
+///  icon: Icons.heart,
+///  size: 24,
+///  bgColor: Colors.pink,
+///  color: Colors.white,
+/// )
+/// ```
+///
+/// {@end-tool}
 class CxIconButton extends StatefulWidget {
   const CxIconButton({
     super.key,
@@ -14,14 +29,32 @@ class CxIconButton extends StatefulWidget {
     this.padding,
     this.bgColor,
   });
+
+  /// icon is [IconData] object. You should use [Icons] or other [IconData] libraries.
   final IconData? icon;
+
+  /// it sets size of the icon. Default is `16`.
   final double? size;
+
+  /// color of the icon. Default is `Colors.black`.
   final Color? color;
+
+  /// the background color of the icon.
   final Color? bgColor;
+
+  /// color of the hover state for icon. Default is `Colors.black.withAlpha(200)`.
   final Color? hoverColor;
+
+  /// color of the focus state for icon. Default is `Colors.black.withAlpha(100)`.
   final Color? focusColor;
+
+  /// color of the click state for icon. Default is `Colors.black87`.
   final Color? clickColor;
+
+  /// icon's margin space. Default is `6`;
   final double? padding;
+
+  /// icons's click event.
   final void Function()? click;
 
   @override

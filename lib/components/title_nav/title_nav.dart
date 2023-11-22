@@ -1,5 +1,22 @@
 import 'package:flutter/material.dart';
 
+/// Title Navigation
+/// It likes component of the category list.
+///
+/// Usage:
+/// {@tool snippet}
+/// ```dart
+///
+///  CxTitleNav(
+///    size: 12,
+///    selectSize: 16,
+///    color: Colors.primary,
+///    selectColor: Colors.red,
+///    items: const ["首页", "电视剧", "电影", "综艺", "动漫", "少儿", "体育", "纪录片"],
+///  )
+///
+/// ```
+/// {@end-tool}
 class CxTitleNav extends StatefulWidget {
   const CxTitleNav({
     super.key,
@@ -14,12 +31,22 @@ class CxTitleNav extends StatefulWidget {
   @override
   State<CxTitleNav> createState() => _CxTitleNavState();
 
+  /// the data list of the component.
   final List<String> items;
+
+  /// the font size of the normal items. Default is 14.
   final double? size;
+
+  /// the index of the select item. Default is 0.
   final int? select;
+
+  /// the font size of the select item. Default is 20.
   final double? selectSize;
 
+  /// color of the normal items. Default is theme's hintColor.
   final Color? color;
+
+  /// the color of the select item. Default is Colors.black87.
   final Color? selectColor;
 }
 

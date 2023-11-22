@@ -1,5 +1,22 @@
 import 'package:flutter/material.dart';
 
+/// Image Card Component
+/// The focus of the image card is the `img` address. address is local or network.
+/// Additional properties are title, subtitle, topRight, topLeft, bottomRight, bottomLeft, cornerHeight or imgFix.
+/// The topRight, topLeft, bottomRight and bottomLeft are in the Stack layout. Their type is [Widget].
+///
+/// the example below is that how to use it.
+///
+/// {@tool snippet}
+/// ```dart
+///   CxImageCard(
+///     title: "Movie Name",
+///     subtitle: "a good movie",
+///     img: "https://example.com/images/example.jpg",
+///     imgIsNet: true,
+///   )
+/// ```
+/// {@end-tool}
 class CxImageCard extends StatefulWidget {
   const CxImageCard({
     super.key,
@@ -17,15 +34,35 @@ class CxImageCard extends StatefulWidget {
 
   @override
   State<CxImageCard> createState() => _CxImageCardState();
+
+  /// top left widget of the image card.
   final List<Widget>? topLeft;
+
+  /// top right widget of the image card.
   final List<Widget>? topRight;
+
+  /// bottom left widget of the image card.
   final List<Widget>? bottomLeft;
+
+  /// bottom right widget of the image card.
   final List<Widget>? bottomRight;
+
+  /// the title of the image card.
   final String? title;
+
+  /// the image card's subtitle.
   final String? subtitle;
+
+  /// the height of the four corners of image card. Default is `20`.
   final double? cornerHeight;
+
+  /// url of the image.
   final String? img;
+
+  /// Is this image address in network form. Default is `false`.
   final bool? imgIsNet;
+
+  /// Image display mode. Default is `BoxFit.cover`.
   final BoxFit? imgFix;
 }
 

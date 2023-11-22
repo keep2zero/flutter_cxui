@@ -2,12 +2,37 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class SliderObject {
-  String objName;
-  String objCover;
-  SliderObject(this.objName, this.objCover);
-}
-
+/// Slider View Component.
+///
+/// It's very simple in its current state.
+///
+///{@tool snippet}
+///
+///Usage:
+///
+/// ```dart
+/// CxSliderView(
+///   height: 150,
+///   onTap: (SliderObject obj, int index) {
+///     // print("click the item $index");
+///   },
+///   objects: [
+///     SliderObject("海豹看看",
+///         "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200q7mndle1664438925875/332?max_age=7776001"),
+///     SliderObject("故宫里的大怪兽之莫奈何的谜题",
+///         "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200ap8s2p31697455490020/332?max_age=7776001"),
+///     SliderObject("小不点.....",
+///         "https://puui.qpic.cn/vpic_cover/m0038bibwlq/m0038bibwlq_hz.jpg/640"),
+///   ],
+/// )
+///
+/// ```
+///
+///{@end-tool}
+///
+///See more:
+/// [SliderObject] is the item of the list.
+///
 class CxSliderView extends StatefulWidget {
   const CxSliderView({
     super.key,
@@ -21,11 +46,20 @@ class CxSliderView extends StatefulWidget {
   @override
   State<CxSliderView> createState() => _SliderViewState();
 
+  // the data list of the slider view.
   final List<SliderObject> objects;
-  final void Function(SliderObject, int)? onTap;
+
+  // the slider view's height. Default is `180`.
   final double? height;
+
+  /// the color of title. Default is `Colors.white`.
   final Color? titleColor;
+
+  /// the size of title. Default is `12`.
   final double? titleSize;
+
+  /// the click event of the component.
+  final void Function(SliderObject, int)? onTap;
 }
 
 class _SliderViewState extends State<CxSliderView> {
@@ -191,4 +225,14 @@ class _SliderViewState extends State<CxSliderView> {
 
     timer.cancel();
   }
+}
+
+/// the item object of the Slider View Component.
+class SliderObject {
+  /// the item's name.
+  String objName;
+
+  /// the item's image.
+  String objCover;
+  SliderObject(this.objName, this.objCover);
 }

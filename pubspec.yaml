@@ -1,7 +1,7 @@
 name: flutter_cxui
 description: Flutter_cui is a UI toolkit based on the Flutter framework and developed under the Material framework. It provides a rich variety of reusable components and styles, helping developers quickly build cross-platform applications with high performance, high-fidelity, and consistency.
 
-version: 1.0.1
+version: 1.0.1+1
 homepage: https://keep2zero.github.io/docs/cxui
 repository: https://github.com/keep2zero/flutter_cxui
 #publish_to: https://pub.dartlang.org

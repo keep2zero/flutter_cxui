@@ -1,5 +1,31 @@
 import 'package:flutter/material.dart';
 
+/// Card Component
+///
+/// CxCard is a box. The box includes head,body and foot.
+/// The box's properties like radius, bgColor,margin, shadow, boxShadow, minHeight.
+///
+/// The default head includes `title`, `subtitle` and `actions`.
+/// You should use `titleWidget` to overload the title. The default title has other arguments that decorates it.
+///
+/// Under the head that is hdsplit. it's splites the head and card's body. it inclues hdSplit, hdSplitHeight, hdSplitMargin, hdSplitColor.
+///
+/// Card's body is required. You can use [Widget] components to set if you want.
+///
+/// Card's foot includes `foot` and `footWidget`, You can select one of the both.
+///
+/// In this example, it's simple for using.
+///
+/// {@tool snippet}
+/// ```dart
+/// CxCard(
+///   title: "Card Title",
+///   subtitle: "Card subtitle",
+///   body: const Text("hello, card"),
+/// )
+/// ```
+/// {@end-tool}
+///
 class CxCard extends StatelessWidget {
   const CxCard({
     super.key,
