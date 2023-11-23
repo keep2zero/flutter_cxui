@@ -1,6 +1,10 @@
+
+![flutter_cxui](assets/static/cxshow.png)
+
 # flutter_cxui
 
 flutter_cui是一个基于Flutter框架的UI工具包，开发在Material框架下。它提供了丰富的可重用组件和样式， 它可以帮助开发者快速构建高性能、高保真度、高一致性的跨平台应用程序。
+
 
 ## 使用
 
