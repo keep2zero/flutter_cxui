@@ -8,12 +8,23 @@ flutter_cxui is a flutter ui kit with material theme. It includes a lot of reusa
 
 ## Install
 
-```Dart
+```shell
+  flutter pub add flutter_cxui
+```
+
+or
+
+```yaml
+dependencies:
+  flutter_cxui: [version]
+```
+
+**Jump to [`Flutter_cxui`](https://pub.dev/packages/flutter_cxui) package.**
 
 ## Usage
 
 `CxConfig` is custom class.
- 
+
 ```Dart
 import 'package:flutter_cxui/cxui.dart';
 
