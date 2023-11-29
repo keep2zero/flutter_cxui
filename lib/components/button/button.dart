@@ -1,9 +1,21 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
+
+import 'package:flutter/widgets.dart';
 
 /// Button Component
 ///
 /// Button has two states that they are solid and fill. Set the value of type property.
+///
+/// **Demo:**
+///
+/// ```dart
+///   CxButton(
+///      text: "Wechat",
+///      type: CxButtonType.fill,
+///      icon: Icons.wechat,
+///      color: Colors.green,
+///   )
+/// ```
 ///
 class CxButton extends StatefulWidget {
   const CxButton({
@@ -174,4 +186,5 @@ class _CxButtonState extends State<CxButton> {
   }
 }
 
+/// Button type. it's `enum` type.
 enum CxButtonType { fill, solid }
