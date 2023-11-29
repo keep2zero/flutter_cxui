@@ -118,7 +118,7 @@ class PageButtonApp extends StatelessWidget {
   }
 
   Widget buildTextIcon() {
-    return const CxCard(
+    return CxCard(
       title: "Label and Icon",
       shadow: true,
       radius: 5,
@@ -130,12 +130,15 @@ class PageButtonApp extends StatelessWidget {
             type: CxButtonType.fill,
             icon: Icons.wechat,
             color: Colors.green,
+            onTap: () {
+              print("Wechat");
+            },
           ),
-          CxButton(
+          const CxButton(
             text: "Location",
             icon: Icons.location_on_outlined,
           ),
-          CxButton(
+          const CxButton(
             text: "Home",
             color: Colors.purple,
             type: CxButtonType.fill,
