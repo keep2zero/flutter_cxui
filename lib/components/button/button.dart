@@ -133,7 +133,7 @@ class _CxButtonState extends State<CxButton> {
 
   void lockup() {
     if (delay != null) return;
-    print("hello");
+
     delay = Future.delayed(const Duration(milliseconds: 100)).whenComplete(() {
       setState(() {
         index = 0;
