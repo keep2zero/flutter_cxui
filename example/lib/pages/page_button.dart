@@ -56,6 +56,7 @@ class PageButtonApp extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CxButton(
+            type: CxButtonType.text,
             text: "hello",
             // padding: EdgeInsets.all(10),
           ),
