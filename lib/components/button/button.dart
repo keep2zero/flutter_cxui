@@ -33,8 +33,12 @@ class CxButton extends StatefulWidget {
     this.shadow = true,
     this.width,
     this.height,
+    this.disabled = false,
     this.onTap,
   });
+
+  /// the state of disabled. default `false`
+  final bool disabled;
 
   /// button width.
   final double? width;
@@ -97,6 +101,11 @@ class _CxButtonState extends State<CxButton> {
 
     Color iconColor = index == 0 ? diconColor : diconColor.withAlpha(100);
     Color textColor = index == 0 ? dtextColor : dtextColor.withAlpha(100);
+    if (widget.disabled) {
+      color = Color.fromARGB(255, 225, 225, 225);
+      textColor = Color.fromARGB(255, 160, 159, 159);
+      iconColor = Color.fromARGB(255, 160, 159, 159);
+    }
 
     List<BoxShadow> bslist = [];
     if (index == 1 && widget.shadow) {
@@ -112,7 +121,7 @@ class _CxButtonState extends State<CxButton> {
     }
 
     final deco = BoxDecoration(
-      color: widget.type == CxButtonType.fill ? color : null,
+      color: (widget.type == CxButtonType.fill || index == 1) ? color : null,
       border:
           widget.type == CxButtonType.solid ? Border.all(color: color) : null,
       borderRadius: BorderRadius.circular(widget.radius!),
@@ -132,6 +141,7 @@ class _CxButtonState extends State<CxButton> {
   }
 
   void lockup() {
+    if (widget.disabled) return;
     if (delay != null) return;
 
     delay = Future.delayed(const Duration(milliseconds: 100)).whenComplete(() {
@@ -144,8 +154,12 @@ class _CxButtonState extends State<CxButton> {
 
   Widget buildBody(BoxDecoration deco, Color iconColor, Color textColor) {
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: () {
+        if (widget.disabled) return;
+        if (widget.onTap != null) widget.onTap!();
+      },
       onTapDown: (detail) {
+        if (widget.disabled) return;
         if (delay == null) {
           setState(() {
             index = 1;
@@ -187,4 +201,4 @@ class _CxButtonState extends State<CxButton> {
 }
 
 /// Button type. it's `enum` type.
-enum CxButtonType { fill, solid }
+enum CxButtonType { fill, solid, text }
