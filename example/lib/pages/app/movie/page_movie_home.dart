@@ -52,21 +52,25 @@ class _PageMovieHomeState extends State<PageMovieHome> {
             width: 10,
           ),
         ],
-        leading: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: CxButton(
-              padding: const EdgeInsets.all(6),
-              color: Colors.white.withAlpha(50),
-              type: CxButtonType.fill,
-              text: "追",
-              icon: Icons.menu,
-            ),
-          ),
-        ),
+        leading: buildLeading(),
         title: buildSearchbar(),
       ),
       body: buildBody(context),
+    );
+  }
+
+  Widget buildLeading() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: CxButton(
+          padding: const EdgeInsets.all(6),
+          color: Colors.white.withAlpha(50),
+          type: CxButtonType.fill,
+          text: "追",
+          icon: Icons.menu,
+        ),
+      ),
     );
   }
 
