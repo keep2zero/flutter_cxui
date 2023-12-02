@@ -27,6 +27,7 @@ class CxTitleNav extends StatefulWidget {
     this.selectSize,
     this.color,
     this.selectColor,
+    this.onChange,
   });
 
   @override
@@ -49,6 +50,9 @@ class CxTitleNav extends StatefulWidget {
 
   /// the color of the select item. Default is Colors.black87.
   final Color? selectColor;
+
+  /// the change event.
+  final void Function(int)? onChange;
 }
 
 class _CxTitleNavState extends State<CxTitleNav> {
@@ -78,6 +82,7 @@ class _CxTitleNavState extends State<CxTitleNav> {
 
     return GestureDetector(
       onTap: () {
+        if (widget.onChange != null) widget.onChange!(index);
         setState(() {
           current = index;
         });
