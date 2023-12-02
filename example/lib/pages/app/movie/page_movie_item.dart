@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cxui/cxui.dart';
 
+import '../../../config.dart';
+
 class PageMovieItem extends StatelessWidget {
   const PageMovieItem({super.key});
 
@@ -18,8 +20,8 @@ class PageMovieItem extends StatelessWidget {
             const Placeholder(
               fallbackHeight: 200,
             ),
-            CxTitleNav(
-              items: const ["详情", "看点", "讨论"],
+            const CxTitleNav(
+              items: ["详情", "看点", "讨论"],
               selectSize: 16,
             ),
             const Row(
@@ -45,14 +47,40 @@ class PageMovieItem extends StatelessWidget {
             ),
 
             //
-            CxTitleNav(
-              items: const ["选集"],
+            const CxTitleNav(
+              items: ["选集"],
               selectSize: 16,
             ),
 
             CxSelectButtonList(
+              bgColor: CxConfig.primary,
+              selectBgColor: CxConfig.highlight,
               data: const ["1", "2", "3", "4", "5", "6"],
+              hasTopRight: const [3, 4, 5],
               onChange: (index, item) {},
+              topRight: Container(
+                margin: const EdgeInsets.only(top: 8, right: 8),
+                padding: const EdgeInsets.only(
+                  left: 2,
+                  right: 2,
+                  bottom: 2,
+                  top: 2,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.amberAccent[700],
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(5),
+                      bottomLeft: Radius.circular(5)),
+                ),
+                child: const Text(
+                  "VIP",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 6,
+                  ),
+                ),
+                // color: Colors.amber,
+              ),
             ),
 
             //
