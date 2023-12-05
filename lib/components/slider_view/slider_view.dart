@@ -142,8 +142,8 @@ class _SliderViewState extends State<CxSliderView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    buildTitle(),
-                    buildDot(),
+                    if (widget.objects.isNotEmpty) buildTitle(),
+                    if (widget.objects.isNotEmpty) buildDot(),
                   ],
                 ),
               ),
@@ -188,7 +188,8 @@ class _SliderViewState extends State<CxSliderView> {
     );
   }
 
-  Widget itemSliderImage(BuildContext context, int ix) {
+  Widget? itemSliderImage(BuildContext context, int ix) {
+    if (widget.objects.isEmpty) return null;
     return GestureDetector(
       onTap: () {
         if (widget.onTap != null) widget.onTap!(widget.objects[ix], ix);
@@ -202,7 +203,7 @@ class _SliderViewState extends State<CxSliderView> {
         ),
         child: Image.network(
           widget.objects[ix].objCover,
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.cover,
           width: double.infinity,
         ),
       ),
