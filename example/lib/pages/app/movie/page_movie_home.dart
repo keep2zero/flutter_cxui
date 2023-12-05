@@ -5,6 +5,8 @@ import 'package:flutter_cxui/cxui.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../config.dart';
+import 'data/api.dart';
+import 'data/model.dart';
 
 class PageMovieHome extends StatefulWidget {
   const PageMovieHome({super.key});
@@ -14,6 +16,11 @@ class PageMovieHome extends StatefulWidget {
 }
 
 class _PageMovieHomeState extends State<PageMovieHome> {
+  List<VideoCate> cateList = [];
+  List<VideoItem> links = [];
+  List<VideoItem> recent = [];
+  List<VideoItem> videos = [];
+
   final _colors = [
     Colors.purple,
     Colors.green,
@@ -28,6 +35,33 @@ class _PageMovieHomeState extends State<PageMovieHome> {
   ];
 
   int index = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    VideoRequest.cateList().then((value) {
+      setState(() {
+        cateList = value;
+      });
+    });
+
+    VideoRequest.archiveLink("home").then((value) {
+      setState(() {
+        links = value;
+      });
+    });
+
+    VideoRequest.archiveLink("recent").then((value) {
+      setState(() {
+        recent = value;
+      });
+    });
+
+    VideoRequest.findVideList(null).then((value) {
+      videos = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +98,8 @@ class _PageMovieHomeState extends State<PageMovieHome> {
       child: Padding(
         padding: const EdgeInsets.only(left: 10),
         child: CxButton(
-          padding: const EdgeInsets.all(6),
+          height: 36,
+          padding: const EdgeInsets.all(0),
           color: Colors.white.withAlpha(50),
           type: CxButtonType.fill,
           text: "追",
@@ -79,8 +114,8 @@ class _PageMovieHomeState extends State<PageMovieHome> {
       height: 40,
       padding: const EdgeInsets.only(
         left: 0,
-        top: 6,
-        bottom: 6,
+        top: 3,
+        bottom: 3,
         right: 10,
       ),
       child: TextField(
@@ -137,31 +172,18 @@ class _PageMovieHomeState extends State<PageMovieHome> {
               },
               color: Colors.white.withAlpha(160),
               selectColor: Colors.white,
-              select: 1,
-              items: const [
-                "NBA",
-                "首页",
-                "电视剧",
-                "动漫",
-                "电影",
-                "综艺节目",
-                "少儿",
-                "专题",
-                "奥运"
-              ],
+              select: 0,
+              items: cateList.map((VideoCate it) {
+                return it.cateName;
+              }).toList(),
             ),
             CxSliderView(
               onTap: (SliderObject obj, int index) {
                 Navigator.of(context).pushNamed("/app/movie/item");
               },
-              objects: [
-                SliderObject("海豹看看",
-                    "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200q7mndle1664438925875/332?max_age=7776001"),
-                SliderObject("故宫里的大怪兽之莫奈何的谜题",
-                    "https://puui.qpic.cn/vcover_hz_pic/0/mzc00200ap8s2p31697455490020/332?max_age=7776001"),
-                SliderObject("小不点.....",
-                    "https://puui.qpic.cn/vpic_cover/m0038bibwlq/m0038bibwlq_hz.jpg/640"),
-              ],
+              objects: links
+                  .map((VideoItem it) => SliderObject(it.vName, it.vCover))
+                  .toList(),
             ),
             buildList(context),
             buildEnd(context),
@@ -177,7 +199,7 @@ class _PageMovieHomeState extends State<PageMovieHome> {
       child: GridView.builder(
         controller: null,
         shrinkWrap: true,
-        itemCount: 6,
+        itemCount: recent.length,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -189,10 +211,12 @@ class _PageMovieHomeState extends State<PageMovieHome> {
   }
 
   Widget? itemBuilder(BuildContext context, int index) {
-    return const CxImageCard(
-      title: "hello",
-      subtitle: "test",
-      img: "assets/img/card-img-01.jpg",
+    if (recent.length == 0) return null;
+    return CxImageCard(
+      imgIsNet: true,
+      title: recent[index].vName,
+      // subtitle: recent[index].,
+      img: recent[index].vCover,
     );
   }
 
@@ -200,14 +224,15 @@ class _PageMovieHomeState extends State<PageMovieHome> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
+      itemCount: videos.length,
       itemBuilder: (ctx, inx) {
-        return const SizedBox(
+        return SizedBox(
           height: 200,
           child: CxImageCard(
-            title: "您好",
-            subtitle: "是什么",
-            img: "assets/img/card-img-01.jpg",
+            imgIsNet: true,
+            title: videos[inx].vName,
+            // subtitle: "是什么",
+            img: videos[inx].vCover,
           ),
         );
       },
