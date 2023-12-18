@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import './config.dart';
-import './pages/app/movie/page_movie_home.dart';
-import './pages/app/movie/page_movie_item.dart';
+
 import './pages/page_card.dart';
 import './pages/page_icon_button.dart';
 import './pages/page_place_grid.dart';
@@ -59,8 +58,8 @@ class MyApp extends StatelessWidget {
         "/title_nav": (context) => const PageTitleNav(),
         "/card": (context) => const PageCard(),
         "/slider_view": (context) => const PageSliderView(),
-        "/app/movie/home": (context) => const PageMovieHome(),
-        "/app/movie/item": (context) => const PageMovieItem(),
+        // "/app/movie/home": (context) => const PageMovieHome(),
+        // "/app/movie/item": (context) => const PageMovieItem(),
       },
       title: 'CXUI',
 
