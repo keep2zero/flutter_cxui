@@ -29,6 +29,8 @@ class _PageCxscrollviewState extends State<PageCxscrollview> {
   @override
   Widget build(BuildContext context) {
     return CxScrollView(
+      isLoadingIcon: false,
+      loadingText: "加载中...",
       onTimeout: () {
         print("timeout");
       },

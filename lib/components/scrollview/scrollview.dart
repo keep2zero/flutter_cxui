@@ -2,6 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+/// CxScrollView Component.
+/// It can be called back externally and changed loading widget to what you want.
+/// It still has timeout callback function.
+///
 enum CxScrollViewStatus { loading, complete }
 
 class CxScrollView extends StatefulWidget {
@@ -14,6 +18,7 @@ class CxScrollView extends StatefulWidget {
     this.loadingWidget,
     this.onTimeout,
     this.isLoadingIcon = true,
+    this.loadingColor = Colors.white,
   });
 
   /// main container.
@@ -32,6 +37,9 @@ class CxScrollView extends StatefulWidget {
   //loading text. default value is "Loading..."
   final String loadingText;
 
+  final Color loadingColor;
+
+  /// load callback.
   final Function() onLoad;
 
   @override
@@ -64,14 +72,14 @@ class _CxScrollViewState extends State<CxScrollView>
 
   Widget loadingTextWidget() {
     return Container(
-      color: Colors.grey[200],
+      // color: Colors.grey[200],
       width: double.infinity,
       padding: const EdgeInsets.all(8.0),
       child: Text(
         widget.loadingText,
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: Colors.black.withAlpha(160),
+          color: widget.loadingColor,
           fontSize: 14,
           fontWeight: FontWeight.normal,
           decoration: TextDecoration.none,
@@ -92,7 +100,7 @@ class _CxScrollViewState extends State<CxScrollView>
       child: Icon(
         Icons.rotate_right,
         size: 30,
-        color: Colors.white.withAlpha(200),
+        color: widget.loadingColor,
       ),
     );
   }
