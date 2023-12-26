@@ -13,6 +13,7 @@ class PlayerControl extends StatefulWidget {
     this.progress = 0,
     this.ratio = 1,
     this.isShow = true,
+    this.isCenter = false,
   });
 
   final VideoPlayerController controller;
@@ -22,6 +23,7 @@ class PlayerControl extends StatefulWidget {
   final double progress;
   final double ratio;
   final bool isShow;
+  final bool isCenter;
   @override
   State<PlayerControl> createState() => _PlayerControlState();
 }
@@ -43,26 +45,27 @@ class _PlayerControlState extends State<PlayerControl> {
     return Container(
       child: Stack(
         children: [
-          Positioned.fill(
-            bottom: 50,
-            child: Center(
-              child: CxButton(
-                type: CxButtonType.fill,
-                radius: 50,
-                width: 50,
-                height: 50,
-                color: Colors.white.withAlpha(150),
-                iconColor: Colors.white.withAlpha(200),
-                padding: const EdgeInsets.all(0),
-                icon: isPlayed ? Icons.pause_circle : Icons.play_circle,
-                iconSize: 50,
-                onTap: () {
-                  clickPlay();
-                  // player.seek(const Duration(seconds: 10));
-                },
+          if (widget.isCenter)
+            Positioned.fill(
+              bottom: 50,
+              child: Center(
+                child: CxButton(
+                  type: CxButtonType.fill,
+                  radius: 50,
+                  width: 50,
+                  height: 50,
+                  color: Colors.white.withAlpha(150),
+                  iconColor: Colors.white.withAlpha(200),
+                  padding: const EdgeInsets.all(0),
+                  icon: isPlayed ? Icons.pause_circle : Icons.play_circle,
+                  iconSize: 50,
+                  onTap: () {
+                    clickPlay();
+                    // player.seek(const Duration(seconds: 10));
+                  },
+                ),
               ),
             ),
-          ),
           playActions(),
         ],
       ),
