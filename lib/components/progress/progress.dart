@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CxProgress extends StatefulWidget {
-  const CxProgress({super.key, this.progress = 0, this.onProgress});
+  const CxProgress(
+      {super.key, this.progress = 0, this.onProgress, this.width, this.height});
   final double? progress;
   final Function(double)? onProgress;
+  final double? width;
+  final double? height;
   @override
   State<CxProgress> createState() => _CxProgressState();
 }
@@ -20,7 +23,7 @@ class _CxProgressState extends State<CxProgress> {
         }
       },
       child: Container(
-        height: 10,
+        height: widget.height ?? 10,
         child: Stack(
           children: [
             Container(
@@ -28,7 +31,7 @@ class _CxProgressState extends State<CxProgress> {
             ),
             Container(
               width: (widget.progress!.isNaN) ? 0 : widget.progress,
-              color: Colors.red.withAlpha(160),
+              color: Colors.purple.withAlpha(100),
             ),
           ],
         ),

@@ -1,6 +1,9 @@
 // import 'package:fijkplayer/fijkplayer.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
+import 'package:flutter_cxui/components/player/player_box.dart';
+import 'package:flutter_cxui/components/player/player_control.dart';
 import 'package:flutter_cxui/cxui.dart';
 import 'package:video_player/video_player.dart';
 
@@ -8,26 +11,29 @@ import 'package:video_player/video_player.dart';
 // timeRatio: follow screen width;
 
 class CxPlayer extends StatefulWidget {
-  const CxPlayer({super.key, this.width, this.onFullScreen});
+  const CxPlayer({super.key, this.width, this.onFullScreen, required this.url});
   final double? width;
   final Function(bool)? onFullScreen;
+  final String url;
   @override
   State<CxPlayer> createState() => _CxPlayerState();
 }
 
-class _CxPlayerState extends State<CxPlayer> {
+class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
   bool isPlayed = false;
   double? progressValue = 0; //play progress
 
   int seconds = 0; //总时间
   int seconding = 0; //当前时间
   double timeRatio = 1;
-  double ratio = 16 / 9;
+  double ratio = 9 / 16;
 
   bool isFull = false;
+  bool isShow = true;
 
-  VideoPlayerController controller = VideoPlayerController.networkUrl(Uri.parse(
-      "https://s5.bfbfvip.com/video/minglongshaonian/%E7%AC%AC01%E9%9B%86/index.m3u8"));
+  double height = 0;
+
+  late VideoPlayerController controller;
   // VideoPlayerController controller = VideoPlayerController.networkUrl(Uri.parse(
   //     "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4"));
   // VideoPlayerController? controller;
@@ -36,185 +42,128 @@ class _CxPlayerState extends State<CxPlayer> {
   // late final player = Player();
   // Create a [VideoController] to handle video output from [Player].
   // late final controller = VideoController(player);
+
+  @override
+  void didChangeMetrics() {
+    fullscreenListener();
+    super.didChangeMetrics();
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
-    controller.initialize().then((v) {
-      final value = controller.value;
+    WidgetsBinding.instance.addObserver(this);
 
+    controller = VideoPlayerController.networkUrl(Uri.parse(widget.url));
+
+    //total of the seconds.
+    //video ratio.
+    // time ratio.
+    controller.initialize().then((v) {
+      controller.addListener(() {
+        final pos = controller.value.position;
+        // print("hello: ${pos.inSeconds} ${ratio} ${width}");
+        setState(() {
+          seconding = pos.inSeconds;
+          progressValue = timeRatio * seconding;
+        });
+      });
+
+      final value = controller.value;
+      print("the ratio: ${value.size} ${value.size.width / value.size.height}");
       setState(() {
         seconds = value.duration.inSeconds;
         // print(seconds);
         timeRatio =
             (widget.width ?? MediaQuery.of(context).size.width) / seconds;
-        ratio = value.size.width / value.size.height;
+        ratio = value.size.height / value.size.width;
       });
     });
 
-    controller.addListener(() {
-      final pos = controller.value.position;
-      // print("hello: ${pos.inSeconds} ${ratio} ${width}");
-      setState(() {
-        seconding = pos.inSeconds;
-        progressValue = timeRatio * seconding;
-      });
-    });
-    // controller = VideoPlayerController.asset("/assets/video/test.ts")
-    //   ..initialize().then((value) => {print("hello, player")});
-
-    // controller = VideoPlayerController.networkUrl(Uri.parse(
-    //     "https://vip.ffzy-online1.com/20230829/43081_0688f9c3/index.m3u8"));
-    // controller!.initialize().then((value) {
-    //   print("test");
-    // });
-
-    // player
-    //     .open(Media(
-    //         "https://vip.ffzy-online1.com/20230829/43081_0688f9c3/index.m3u8"))
-    //     .then((value) => null);
+    //calc play progress.
 
     super.initState();
   }
 
-  void clickPlay() {
-    !isPlayed ? controller.play() : controller.pause();
-    setState(() {
-      isPlayed = !isPlayed;
-    });
+  void fullscreenListener() {
+    Orientation direct = MediaQuery.of(context).orientation;
+    print("fullscreen: ${direct}");
+    if (direct == Orientation.portrait) {
+      if (widget.onFullScreen != null && context.mounted) {
+        widget.onFullScreen!(true);
+      }
+      setState(() {
+        isFull = true;
+      });
+    } else {
+      if (widget.onFullScreen != null && context.mounted) {
+        widget.onFullScreen!(false);
+      }
+      setState(() {
+        isFull = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final w = widget.width ?? MediaQuery.of(context).size.width;
-    timeRatio = w / seconds;
+    final box = MediaQuery.of(context);
+    double width = box.size.width;
 
-    if (MediaQuery.of(context).orientation == Orientation.landscape) {
-      if (isFull == false) {
-        if (widget.onFullScreen != null) widget.onFullScreen!(true);
-        setState(() {
-          isFull = true;
-        });
-      }
-    } else {
-      if (isFull) {
-        if (widget.onFullScreen != null) widget.onFullScreen!(false);
-        setState(() {
-          isFull = false;
-        });
-      }
+    timeRatio = width / seconds;
+    height = width * ratio;
+    if (height > box.size.height) {
+      height = box.size.height;
+      width = height / ratio;
     }
-    return Container(
-      height: w / ratio,
-      width: w,
-      child: NotificationListener(
-        onNotification: (notification) {
-          print(notification);
-          return false;
-        },
+
+    return Center(
+      child: Container(
+        height: height,
+        width: double.infinity,
+        color: Colors.black,
         child: Stack(
           children: [
+            // Positioned.fill(
+            Center(
+              child: PlayerBox(
+                controller: controller,
+                width: width,
+                height: height,
+              ),
+            ),
+            // ),
             Positioned.fill(
-              child: Container(
-                color: Colors.black,
-                child: VideoPlayer(controller),
-              ),
-            ),
-            Positioned(
-              child: Center(
-                child: CxButton(
-                  type: CxButtonType.fill,
-                  radius: 60,
-                  width: 60,
-                  height: 60,
-                  color: Colors.white.withAlpha(150),
-                  iconColor: Colors.white.withAlpha(200),
-                  padding: const EdgeInsets.all(0),
-                  icon: !isPlayed ? Icons.play_circle : Icons.pause_circle,
-                  iconSize: 50,
-                  onTap: () {
-                    clickPlay();
-                    // player.seek(const Duration(seconds: 10));
-                  },
+              child: GestureDetector(
+                onDoubleTapDown: (TapDownDetails detail) {
+                  print("double click ${detail.localPosition}");
+                  final Offset offset = detail.localPosition;
+                  final width = MediaQuery.of(context).size.width / 2;
+                  if (offset.dx < width) {
+                    if (seconding > 10) {
+                      controller.seekTo(Duration(seconds: seconding - 10));
+                    }
+                  } else {
+                    controller.seekTo(Duration(seconds: seconding + 10));
+                  }
+                },
+                onTap: () {
+                  print("object");
+                  setState(() {
+                    isShow = !isShow;
+                  });
+                },
+                behavior: HitTestBehavior.translucent,
+                child: PlayerControl(
+                  seconds: seconds,
+                  seconding: seconding,
+                  controller: controller,
+                  progress: progressValue ?? 0,
+                  isFull: isFull,
+                  ratio: timeRatio,
+                  isShow: isShow,
                 ),
               ),
             ),
-            playActions()
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget playActions() {
-    return Positioned(
-      bottom: 0,
-      right: 0,
-      left: 0,
-      // height: 50,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            CxProgress(
-              onProgress: (value) {
-                controller
-                    .seekTo(Duration(seconds: (value / timeRatio).ceil()));
-              },
-              progress: progressValue ?? 0,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    CxButton(
-                      padding: const EdgeInsets.all(0),
-                      icon: isPlayed ? Icons.pause_circle : Icons.play_circle,
-                      color: Colors.white,
-                      iconSize: 30,
-                      onTap: () {
-                        clickPlay();
-                      },
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    PlayTime(total: seconds, progress: seconding),
-                  ],
-                ),
-                Row(children: [
-                  CxIconButton(
-                    click: () {
-                      if (!isFull) {
-                        SystemChrome.setPreferredOrientations([
-                          DeviceOrientation.landscapeLeft,
-                          DeviceOrientation.landscapeRight,
-                        ]);
-                      } else {
-                        SystemChrome.setPreferredOrientations([
-                          DeviceOrientation.portraitUp,
-                          DeviceOrientation.portraitDown,
-                        ]);
-                      }
-                      // if (widget.onFullScreen != null)
-                      //   widget.onFullScreen!(!isFull);
-                      setState(() {
-                        isFull = !isFull;
-                      });
-                    },
-                    icon: isFull ? Icons.fullscreen_exit : Icons.fullscreen,
-                    size: 30,
-                    color: Colors.white,
-                    focusColor: Colors.white,
-                    // hoverColor: Colors.white,
-                    clickColor: Colors.white.withAlpha(100),
-                  )
-                ])
-              ],
-            )
           ],
         ),
       ),
@@ -223,49 +172,9 @@ class _CxPlayerState extends State<CxPlayer> {
 
   @override
   void dispose() {
-    // controller!.dispose();
+    controller.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     // player.dispose();
     super.dispose();
-  }
-}
-
-const playTimeStyle = TextStyle(color: Colors.white);
-
-class PlayTime extends StatelessWidget {
-  const PlayTime({
-    super.key,
-    this.total = 0,
-    this.progress = 0,
-  });
-  final int total;
-  final int progress;
-
-  String time(int seconds) {
-    int minu = seconds ~/ 60;
-    int sec = seconds % 60;
-    final minuStr = minu < 10 ? "0$minu" : "$minu";
-    final secStr = sec < 10 ? "0$sec" : "$sec";
-
-    return "$minuStr:$secStr";
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          time(progress),
-          style: playTimeStyle,
-        ),
-        const Text(
-          " / ",
-          style: playTimeStyle,
-        ),
-        Text(
-          time(total),
-          style: playTimeStyle,
-        ),
-      ],
-    );
   }
 }

@@ -6,34 +6,46 @@ void main() {
   runApp(const PagePlayerApp());
 }
 
-class PagePlayerApp extends StatelessWidget {
+class PagePlayerApp extends StatefulWidget {
   const PagePlayerApp({super.key});
+
+  @override
+  State<PagePlayerApp> createState() => _PagePlayerAppState();
+}
+
+class _PagePlayerAppState extends State<PagePlayerApp> {
+  bool isFull = false;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.purpleAccent[50],
-        appBar: AppBar(
-          backgroundColor: Colors.purple,
-          foregroundColor: Colors.white,
-          title: const Text("CxPlayer"),
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              // color: Colors.black,
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  CxPlayer(
-                    onFullScreen: (isFull) {
-                      print("the fullscreen: $isFull");
-                    },
-                  )
-                ],
-              ),
-            ),
+        appBar: (!isFull)
+            ? AppBar(
+                backgroundColor: Colors.purple,
+                foregroundColor: Colors.white,
+                title: const Text("CxPlayer"),
+              )
+            : null,
+        body: Container(
+          color: Colors.black,
+          // padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              CxPlayer(
+                // key: const Key("key"),
+                url:
+                    "https://s5.bfbfvip.com/video/minglongshaonian/%E7%AC%AC03%E9%9B%86/index.m3u8",
+                onFullScreen: (value) {
+                  print("the fullscreen: $value");
+                  setState(() {
+                    isFull = value;
+                  });
+                },
+              )
+            ],
           ),
         ),
       ),
