@@ -45,8 +45,8 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
 
   @override
   void didChangeMetrics() {
-    fullscreenListener();
     super.didChangeMetrics();
+    fullscreenListener();
   }
 
   @override
@@ -85,23 +85,25 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
   }
 
   void fullscreenListener() {
-    Orientation direct = MediaQuery.of(context).orientation;
-    print("fullscreen: ${direct}");
-    if (direct == Orientation.portrait) {
-      if (widget.onFullScreen != null && context.mounted) {
-        widget.onFullScreen!(true);
+    Future.delayed(Duration(milliseconds: 100), () {
+      Orientation direct = MediaQuery.of(context).orientation;
+      print("fullscreen: ${direct}");
+      if (direct == Orientation.landscape) {
+        if (widget.onFullScreen != null) {
+          widget.onFullScreen!(true);
+        }
+        setState(() {
+          isFull = true;
+        });
+      } else {
+        if (widget.onFullScreen != null) {
+          widget.onFullScreen!(false);
+        }
+        setState(() {
+          isFull = false;
+        });
       }
-      setState(() {
-        isFull = true;
-      });
-    } else {
-      if (widget.onFullScreen != null && context.mounted) {
-        widget.onFullScreen!(false);
-      }
-      setState(() {
-        isFull = false;
-      });
-    }
+    });
   }
 
   @override

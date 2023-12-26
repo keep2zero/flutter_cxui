@@ -34,16 +34,17 @@ class _PagePlayerAppState extends State<PagePlayerApp> {
           // padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              CxPlayer(
-                // key: const Key("key"),
-                url:
-                    "https://s5.bfbfvip.com/video/minglongshaonian/%E7%AC%AC03%E9%9B%86/index.m3u8",
-                onFullScreen: (value) {
-                  print("the fullscreen: $value");
-                  setState(() {
-                    isFull = value;
-                  });
-                },
+              Container(
+                child: CxPlayer(
+                  url:
+                      "https://s5.bfbfvip.com/video/minglongshaonian/%E7%AC%AC03%E9%9B%86/index.m3u8",
+                  onFullScreen: (value) {
+                    print("the fullscreen: $value");
+                    setState(() {
+                      isFull = value;
+                    });
+                  },
+                ),
               )
             ],
           ),

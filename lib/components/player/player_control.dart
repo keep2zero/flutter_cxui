@@ -43,13 +43,14 @@ class _PlayerControlState extends State<PlayerControl> {
     return Container(
       child: Stack(
         children: [
-          Positioned(
+          Positioned.fill(
+            bottom: 50,
             child: Center(
               child: CxButton(
                 type: CxButtonType.fill,
-                radius: 60,
-                width: 60,
-                height: 60,
+                radius: 50,
+                width: 50,
+                height: 50,
                 color: Colors.white.withAlpha(150),
                 iconColor: Colors.white.withAlpha(200),
                 padding: const EdgeInsets.all(0),
