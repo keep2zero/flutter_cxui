@@ -183,7 +183,7 @@ class _CxButtonState extends State<CxButton> {
                 color: iconColor,
                 size: widget.iconSize ?? 16,
               ),
-            if (widget.text != null || widget.icon != null)
+            if (widget.text != null)
               const SizedBox(
                 width: 2,
               ),
