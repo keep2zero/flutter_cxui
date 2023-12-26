@@ -13,5 +13,6 @@ export 'components/title_nav/title_nav.dart';
 export 'components/button/button.dart';
 export 'components/scrollview/scrollview.dart';
 export 'components/player/player.dart';
+export 'components/progress/progress.dart';
 
 const version = "1.0.2";
