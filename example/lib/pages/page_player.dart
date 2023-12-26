@@ -24,8 +24,14 @@ class PagePlayerApp extends StatelessWidget {
             child: Container(
               // color: Colors.black,
               padding: const EdgeInsets.all(20),
-              child: const Column(
-                children: [CxPlayer()],
+              child: Column(
+                children: [
+                  CxPlayer(
+                    onFullScreen: (isFull) {
+                      print("the fullscreen: $isFull");
+                    },
+                  )
+                ],
               ),
             ),
           ),

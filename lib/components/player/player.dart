@@ -8,8 +8,9 @@ import 'package:video_player/video_player.dart';
 // timeRatio: follow screen width;
 
 class CxPlayer extends StatefulWidget {
-  const CxPlayer({super.key});
-
+  const CxPlayer({super.key, this.width, this.onFullScreen});
+  final double? width;
+  final Function(bool)? onFullScreen;
   @override
   State<CxPlayer> createState() => _CxPlayerState();
 }
@@ -21,7 +22,7 @@ class _CxPlayerState extends State<CxPlayer> {
   int seconds = 0; //总时间
   int seconding = 0; //当前时间
   double timeRatio = 1;
-  double ratio = 1;
+  double ratio = 16 / 9;
 
   bool isFull = false;
 
@@ -40,11 +41,12 @@ class _CxPlayerState extends State<CxPlayer> {
     // TODO: implement initState
     controller.initialize().then((v) {
       final value = controller.value;
-      final width = MediaQuery.sizeOf(context).width;
+
       setState(() {
         seconds = value.duration.inSeconds;
-        print(seconds);
-        timeRatio = width / seconds;
+        // print(seconds);
+        timeRatio =
+            (widget.width ?? MediaQuery.of(context).size.width) / seconds;
         ratio = value.size.width / value.size.height;
       });
     });
@@ -83,39 +85,62 @@ class _CxPlayerState extends State<CxPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    final w = MediaQuery.of(context).size.width;
+    final w = widget.width ?? MediaQuery.of(context).size.width;
+    timeRatio = w / seconds;
+
+    if (MediaQuery.of(context).orientation == Orientation.landscape) {
+      if (isFull == false) {
+        if (widget.onFullScreen != null) widget.onFullScreen!(true);
+        setState(() {
+          isFull = true;
+        });
+      }
+    } else {
+      if (isFull) {
+        if (widget.onFullScreen != null) widget.onFullScreen!(false);
+        setState(() {
+          isFull = false;
+        });
+      }
+    }
     return Container(
       height: w / ratio,
       width: w,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Container(
-              color: Colors.black,
-              child: VideoPlayer(controller),
-            ),
-          ),
-          Positioned(
-            child: Center(
-              child: CxButton(
-                type: CxButtonType.fill,
-                radius: 60,
-                width: 60,
-                height: 60,
-                color: Colors.white.withAlpha(150),
-                iconColor: Colors.white.withAlpha(200),
-                padding: const EdgeInsets.all(0),
-                icon: !isPlayed ? Icons.play_circle : Icons.pause_circle,
-                iconSize: 50,
-                onTap: () {
-                  clickPlay();
-                  // player.seek(const Duration(seconds: 10));
-                },
+      child: NotificationListener(
+        onNotification: (notification) {
+          print(notification);
+          return false;
+        },
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Container(
+                color: Colors.black,
+                child: VideoPlayer(controller),
               ),
             ),
-          ),
-          playActions()
-        ],
+            Positioned(
+              child: Center(
+                child: CxButton(
+                  type: CxButtonType.fill,
+                  radius: 60,
+                  width: 60,
+                  height: 60,
+                  color: Colors.white.withAlpha(150),
+                  iconColor: Colors.white.withAlpha(200),
+                  padding: const EdgeInsets.all(0),
+                  icon: !isPlayed ? Icons.play_circle : Icons.pause_circle,
+                  iconSize: 50,
+                  onTap: () {
+                    clickPlay();
+                    // player.seek(const Duration(seconds: 10));
+                  },
+                ),
+              ),
+            ),
+            playActions()
+          ],
+        ),
       ),
     );
   }
@@ -174,6 +199,8 @@ class _CxPlayerState extends State<CxPlayer> {
                           DeviceOrientation.portraitDown,
                         ]);
                       }
+                      // if (widget.onFullScreen != null)
+                      //   widget.onFullScreen!(!isFull);
                       setState(() {
                         isFull = !isFull;
                       });
