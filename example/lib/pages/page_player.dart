@@ -17,7 +17,7 @@ class PagePlayerApp extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.purple,
           foregroundColor: Colors.white,
-          title: const Text("CxButton"),
+          title: const Text("CxPlayer"),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
