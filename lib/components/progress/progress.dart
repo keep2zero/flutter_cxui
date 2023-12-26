@@ -11,7 +11,7 @@ class CxProgress extends StatefulWidget {
 class _CxProgressState extends State<CxProgress> {
   @override
   Widget build(BuildContext context) {
-    print("the size: ${widget.progress!.isNaN}");
+    // print("the size: ${widget.progress!.isNaN}");
     return GestureDetector(
       onTapUp: (TapUpDetails detail) {
         print("detail: ${detail.localPosition}");
