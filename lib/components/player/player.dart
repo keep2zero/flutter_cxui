@@ -33,6 +33,10 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
 
   double height = 0;
 
+  ///
+  double of_start = 0;
+  double of_end = 0;
+
   late VideoPlayerController controller;
   // VideoPlayerController controller = VideoPlayerController.networkUrl(Uri.parse(
   //     "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4"));
@@ -136,8 +140,20 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
             // ),
             Positioned.fill(
               child: GestureDetector(
-                onHorizontalDragUpdate: (detail) {},
-                onHorizontalDragEnd: (detail) {},
+                onHorizontalDragStart: (detail) {
+                  print(detail.localPosition.dx);
+                  of_start = detail.localPosition.dx;
+                },
+                onHorizontalDragUpdate: (detail) {
+                  print(detail.localPosition.dx);
+                  of_end = detail.localPosition.dx;
+                },
+                onHorizontalDragEnd: (detail) {
+                  print("end");
+                  final of_ok = ((of_end - of_start) / width * 100).toInt();
+                  print(of_ok);
+                  controller.seekTo(Duration(seconds: seconding + of_ok));
+                },
                 onDoubleTapDown: (TapDownDetails detail) {
                   print("double click ${detail.localPosition}");
                   final Offset offset = detail.localPosition;
