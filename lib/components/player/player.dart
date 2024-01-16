@@ -136,6 +136,8 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
             // ),
             Positioned.fill(
               child: GestureDetector(
+                onHorizontalDragUpdate: (detail) {},
+                onHorizontalDragEnd: (detail) {},
                 onDoubleTapDown: (TapDownDetails detail) {
                   print("double click ${detail.localPosition}");
                   final Offset offset = detail.localPosition;

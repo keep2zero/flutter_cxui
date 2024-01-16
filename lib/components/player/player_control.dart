@@ -86,6 +86,7 @@ class _PlayerControlState extends State<PlayerControl> {
           children: [
             CxProgress(
               height: 5,
+              range: 20,
               onProgress: (value) {
                 controller
                     .seekTo(Duration(seconds: (value / widget.ratio).ceil()));
