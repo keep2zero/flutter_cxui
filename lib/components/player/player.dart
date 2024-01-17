@@ -163,16 +163,18 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
                   of_start = detail.localPosition.dx;
                 },
                 onHorizontalDragUpdate: (detail) {
-                  of_end = detail.localPosition.dx;
-                  setState(() {
-                    of_sec = dragSecStr(drag2sec());
-                  });
+                  if (of_start > 0) {
+                    of_end = detail.localPosition.dx;
+                    setState(() {
+                      of_sec = dragSecStr(drag2sec());
+                    });
+                  }
                 },
                 onHorizontalDragEnd: (detail) {
-                  final of_ok = drag2sec();
+                  final ofOk = drag2sec();
+                  controller.seekTo(Duration(seconds: seconding + ofOk));
 
-                  controller.seekTo(Duration(seconds: seconding + of_ok));
-
+                  of_start = 0;
                   of_sec = "00:00";
                 },
                 onDoubleTapDown: (TapDownDetails detail) {
