@@ -33,9 +33,10 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
 
   double height = 0;
 
-  ///
+  ///用来计算拖动时间的字段
   double of_start = 0;
   double of_end = 0;
+  String of_sec = "00:00";
 
   late VideoPlayerController controller;
   // VideoPlayerController controller = VideoPlayerController.networkUrl(Uri.parse(
@@ -51,6 +52,24 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
   void didChangeMetrics() {
     super.didChangeMetrics();
     fullscreenListener();
+  }
+
+  int drag2sec() {
+    final box = MediaQuery.of(context);
+    double width = box.size.width;
+    return ((of_end - of_start) / width * 100).toInt();
+  }
+
+  String dragSecStr(int secs) {
+    final m = (secs.abs() / 60).floor().toString().padLeft(2, '0');
+    final s = (secs.abs() % 60).toString().padLeft(2, '0');
+    String res = "$m:$s";
+
+    if (secs < 0) {
+      res = "-$res";
+    }
+
+    return res;
   }
 
   @override
@@ -141,18 +160,20 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
             Positioned.fill(
               child: GestureDetector(
                 onHorizontalDragStart: (detail) {
-                  print(detail.localPosition.dx);
                   of_start = detail.localPosition.dx;
                 },
                 onHorizontalDragUpdate: (detail) {
-                  print(detail.localPosition.dx);
                   of_end = detail.localPosition.dx;
+                  setState(() {
+                    of_sec = dragSecStr(drag2sec());
+                  });
                 },
                 onHorizontalDragEnd: (detail) {
-                  print("end");
-                  final of_ok = ((of_end - of_start) / width * 100).toInt();
-                  print(of_ok);
+                  final of_ok = drag2sec();
+
                   controller.seekTo(Duration(seconds: seconding + of_ok));
+
+                  of_sec = "00:00";
                 },
                 onDoubleTapDown: (TapDownDetails detail) {
                   print("double click ${detail.localPosition}");
@@ -184,6 +205,31 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
                 ),
               ),
             ),
+            if (of_sec != "00:00")
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.black45,
+                    ),
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withAlpha(100),
+                        ),
+                        child: Text(
+                          "$of_sec",
+                          style: const TextStyle(
+                            color: Colors.white60,
+                            fontSize: 26,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
