@@ -18,12 +18,14 @@ class CxPlayer extends StatefulWidget {
     this.onFullScreen,
     required this.url,
     required this.handler,
+    this.onNext,
   });
   final double? width;
   final Function(bool)? onFullScreen;
   final String url;
   final PlayerHandler handler;
   final double? height;
+  final Function()? onNext;
   @override
   State<CxPlayer> createState() => _CxPlayerState();
 }
@@ -227,6 +229,7 @@ class _CxPlayerState extends State<CxPlayer>
                 },
                 behavior: HitTestBehavior.translucent,
                 child: PlayerControl(
+                  onNext: widget.onNext,
                   played: isPlayed,
                   seconds: seconds,
                   seconding: seconding,

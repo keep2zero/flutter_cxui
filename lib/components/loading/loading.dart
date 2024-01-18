@@ -14,7 +14,7 @@ class _CxLoadingState extends State<CxLoading> with TickerProviderStateMixin {
   void initState() {
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1000),
     );
     controller.repeat();
     _animation = Tween<double>(begin: 0, end: 1).animate(controller);

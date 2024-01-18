@@ -16,6 +16,7 @@ class PlayerControl extends StatefulWidget {
     this.isCenter = false,
     this.played = false,
     required this.onPlayed,
+    this.onNext,
   });
 
   final PlayerHandler controller;
@@ -28,6 +29,7 @@ class PlayerControl extends StatefulWidget {
   final bool isCenter;
   final bool played;
   final void Function(bool) onPlayed;
+  final void Function()? onNext;
   @override
   State<PlayerControl> createState() => _PlayerControlState();
 }
@@ -117,6 +119,18 @@ class _PlayerControlState extends State<PlayerControl> {
                     const SizedBox(
                       width: 10,
                     ),
+                    if (widget.onNext != null)
+                      CxButton(
+                        onTap: () {
+                          widget.onNext!();
+                        },
+                        type: CxButtonType.text,
+                        icon: Icons.skip_next,
+                        iconSize: 30,
+                        padding: const EdgeInsets.all(0),
+                        color: Colors.white,
+                      ),
+                    const SizedBox(width: 10),
                     PlayTime(total: widget.seconds, progress: widget.seconding),
                   ],
                 ),
