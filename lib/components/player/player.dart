@@ -1,26 +1,37 @@
 // import 'package:fijkplayer/fijkplayer.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_cxui/components/loading/loading.dart';
 
 import 'package:flutter_cxui/components/player/player_box.dart';
 import 'package:flutter_cxui/components/player/player_control.dart';
-import 'package:flutter_cxui/cxui.dart';
-import 'package:video_player/video_player.dart';
+import 'package:flutter_cxui/components/player/player_handle.dart';
 
 // todo
 // timeRatio: follow screen width;
 
 class CxPlayer extends StatefulWidget {
-  const CxPlayer({super.key, this.width, this.onFullScreen, required this.url});
+  const CxPlayer({
+    super.key,
+    this.width,
+    this.height,
+    this.onFullScreen,
+    required this.url,
+    required this.handler,
+  });
   final double? width;
   final Function(bool)? onFullScreen;
   final String url;
+  final PlayerHandler handler;
+  final double? height;
   @override
   State<CxPlayer> createState() => _CxPlayerState();
 }
 
-class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
+class _CxPlayerState extends State<CxPlayer>
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   bool isPlayed = false;
+  bool loading = false;
   double? progressValue = 0; //play progress
 
   int seconds = 0; //总时间
@@ -38,7 +49,9 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
   double of_end = 0;
   String of_sec = "00:00";
 
-  late VideoPlayerController controller;
+  ///
+
+  // late VideoPlayerController controller;
   // VideoPlayerController controller = VideoPlayerController.networkUrl(Uri.parse(
   //     "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4"));
   // VideoPlayerController? controller;
@@ -76,24 +89,34 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance.addObserver(this);
 
-    controller = VideoPlayerController.networkUrl(Uri.parse(widget.url));
+    widget.handler.addCreate((controller) {
+      setState(() {
+        seconds = 0;
+        seconding = 0;
+        of_sec = "00:00";
+        of_start = 0;
+        of_end = 0;
 
-    //total of the seconds.
-    //video ratio.
-    // time ratio.
-    controller.initialize().then((v) {
-      controller.addListener(() {
-        final pos = controller.value.position;
-        // print("hello: ${pos.inSeconds} ${ratio} ${width}");
-        setState(() {
-          seconding = pos.inSeconds;
-          progressValue = timeRatio * seconding;
-        });
+        isPlayed = false;
+        progressValue = 0;
+        loading = true;
       });
+    });
 
+    widget.handler.addListener((controller) {
+      final pos = controller.value.position;
+      // print("hello: ${pos.inSeconds} ${ratio} ${width}");
+      setState(() {
+        seconding = pos.inSeconds;
+        progressValue = timeRatio * seconding;
+      });
+    });
+
+    widget.handler.addComplete((controller, p0) {
       final value = controller.value;
       print("the ratio: ${value.size} ${value.size.width / value.size.height}");
       setState(() {
+        loading = false;
         seconds = value.duration.inSeconds;
         // print(seconds);
         timeRatio =
@@ -102,13 +125,20 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
       });
     });
 
+    // controller = VideoPlayerController.networkUrl(Uri.parse(widget.url));
+
+    //total of the seconds.
+    //video ratio.
+    // time ratio.
+    // controller.initialize().then((v) {});
+
     //calc play progress.
 
     super.initState();
   }
 
   void fullscreenListener() {
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       Orientation direct = MediaQuery.of(context).orientation;
       print("fullscreen: ${direct}");
       if (direct == Orientation.landscape) {
@@ -143,7 +173,7 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
 
     return Center(
       child: Container(
-        height: height,
+        height: widget.height,
         width: double.infinity,
         color: Colors.black,
         child: Stack(
@@ -151,7 +181,7 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
             // Positioned.fill(
             Center(
               child: PlayerBox(
-                controller: controller,
+                controller: widget.handler,
                 width: width,
                 height: height,
               ),
@@ -172,7 +202,7 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
                 },
                 onHorizontalDragEnd: (detail) {
                   final ofOk = drag2sec();
-                  controller.seekTo(Duration(seconds: seconding + ofOk));
+                  widget.handler.seekTo(Duration(seconds: seconding + ofOk));
 
                   of_start = 0;
                   of_sec = "00:00";
@@ -183,10 +213,10 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
                   final width = MediaQuery.of(context).size.width / 2;
                   if (offset.dx < width) {
                     if (seconding > 10) {
-                      controller.seekTo(Duration(seconds: seconding - 10));
+                      widget.handler.seekTo(Duration(seconds: seconding - 10));
                     }
                   } else {
-                    controller.seekTo(Duration(seconds: seconding + 10));
+                    widget.handler.seekTo(Duration(seconds: seconding + 10));
                   }
                 },
                 onTap: () {
@@ -197,13 +227,19 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
                 },
                 behavior: HitTestBehavior.translucent,
                 child: PlayerControl(
+                  played: isPlayed,
                   seconds: seconds,
                   seconding: seconding,
-                  controller: controller,
+                  controller: widget.handler,
                   progress: progressValue ?? 0,
                   isFull: isFull,
                   ratio: timeRatio,
                   isShow: isShow,
+                  onPlayed: (played) {
+                    setState(() {
+                      isPlayed = played;
+                    });
+                  },
                 ),
               ),
             ),
@@ -216,7 +252,7 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
                     ),
                     child: Center(
                       child: Container(
-                        padding: EdgeInsets.only(left: 10, right: 10),
+                        padding: const EdgeInsets.only(left: 10, right: 10),
                         decoration: BoxDecoration(
                           color: Colors.black.withAlpha(100),
                         ),
@@ -232,6 +268,15 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
                   ),
                 ),
               ),
+            ///////
+            ///
+            if (loading)
+              Positioned.fill(
+                child: CxLoading(),
+              )
+
+            ///
+            ///
           ],
         ),
       ),
@@ -240,7 +285,7 @@ class _CxPlayerState extends State<CxPlayer> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    controller.dispose();
+    // widget.handler.dispose();
     WidgetsBinding.instance.removeObserver(this);
     // player.dispose();
     super.dispose();

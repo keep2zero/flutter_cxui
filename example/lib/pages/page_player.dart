@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cxui/components/player/player_handle.dart';
 
 import 'package:flutter_cxui/cxui.dart';
 
@@ -36,6 +37,7 @@ class _PagePlayerAppState extends State<PagePlayerApp> {
             children: [
               Container(
                 child: CxPlayer(
+                  handler: PlayerHandler(),
                   url:
                       "https://s5.bfbfvip.com/video/minglongshaonian/%E7%AC%AC03%E9%9B%86/index.m3u8",
                   onFullScreen: (value) {

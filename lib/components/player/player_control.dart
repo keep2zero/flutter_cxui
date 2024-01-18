@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cxui/components/player/player_handle.dart';
 import 'package:flutter_cxui/cxui.dart';
-import 'package:video_player/video_player.dart';
 
 class PlayerControl extends StatefulWidget {
   const PlayerControl({
@@ -14,9 +14,11 @@ class PlayerControl extends StatefulWidget {
     this.ratio = 1,
     this.isShow = true,
     this.isCenter = false,
+    this.played = false,
+    required this.onPlayed,
   });
 
-  final VideoPlayerController controller;
+  final PlayerHandler controller;
   final bool isFull;
   final int seconds;
   final int seconding;
@@ -24,13 +26,13 @@ class PlayerControl extends StatefulWidget {
   final double ratio;
   final bool isShow;
   final bool isCenter;
+  final bool played;
+  final void Function(bool) onPlayed;
   @override
   State<PlayerControl> createState() => _PlayerControlState();
 }
 
 class _PlayerControlState extends State<PlayerControl> {
-  bool isPlayed = false;
-
   @override
   void initState() {
     super.initState();
@@ -57,7 +59,7 @@ class _PlayerControlState extends State<PlayerControl> {
                   color: Colors.white.withAlpha(150),
                   iconColor: Colors.white.withAlpha(200),
                   padding: const EdgeInsets.all(0),
-                  icon: isPlayed ? Icons.pause_circle : Icons.play_circle,
+                  icon: widget.played ? Icons.pause_circle : Icons.play_circle,
                   iconSize: 50,
                   onTap: () {
                     clickPlay();
@@ -103,7 +105,9 @@ class _PlayerControlState extends State<PlayerControl> {
                   children: [
                     CxButton(
                       padding: const EdgeInsets.all(0),
-                      icon: isPlayed ? Icons.pause_circle : Icons.play_circle,
+                      icon: widget.played
+                          ? Icons.pause_circle
+                          : Icons.play_circle,
                       color: Colors.white,
                       iconSize: 30,
                       onTap: () {
@@ -159,10 +163,12 @@ class _PlayerControlState extends State<PlayerControl> {
 
   void clickPlay() {
     final controller = widget.controller;
-    !isPlayed ? controller.play() : controller.pause();
-    setState(() {
-      isPlayed = !isPlayed;
-    });
+    !widget.played ? controller.play() : controller.pause();
+
+    widget.onPlayed(!widget.played);
+    // setState(() {
+    //   isPlayed = !isPlayed;
+    // });
   }
 }
 
