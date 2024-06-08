@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cxui/components/chat_view/file_view.dart';
 import 'package:flutter_cxui/components/chat_view/image_view.dart';
 import 'package:flutter_cxui/components/chat_view/text_view.dart';
-import 'package:popover/popover.dart';
+// import 'package:popover/popover.dart';
 
 import '../popover/popover.dart';
 import 'arrow_path.dart';
