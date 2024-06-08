@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cxui/cxui.dart';
 
+import 'mode/chat_data.dart';
+
 void main() {
   runApp(const PageChatApp());
 }
@@ -13,10 +15,23 @@ class PageChatApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 236, 235, 235),
         appBar: AppBar(
           title: const Text("Chat View"),
         ),
-        body: CxChatView(),
+        body: ListView.builder(
+          itemCount: chatData.length,
+          itemBuilder: (context, index) {
+            final item = chatData[index];
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CxChatView(
+                data: item,
+                isDirect: item.name == "word",
+              ),
+            );
+          },
+        ),
       ),
     );
   }

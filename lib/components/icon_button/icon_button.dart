@@ -74,12 +74,16 @@ class _CxIconButtonState extends State<CxIconButton> {
     switch (hover) {
       case 0:
         color = widget.color ?? Colors.black;
+        break;
       case 1:
         color = widget.hoverColor ?? Colors.black.withAlpha(200);
+        break;
       case 2:
         color = widget.focusColor ?? Colors.black.withAlpha(100);
+        break;
       case 3:
         color = widget.clickColor ?? Colors.black87;
+        break;
     }
 
     double radius = widget.size ?? 16;

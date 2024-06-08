@@ -17,6 +17,15 @@ class PagePlayerApp extends StatefulWidget {
 class _PagePlayerAppState extends State<PagePlayerApp> {
   bool isFull = false;
 
+  PlayerHandler handler = PlayerHandler();
+
+  @override
+  void initState() {
+    handler.open(
+        "https://s5.bfbfvip.com/video/minglongshaonian/%E7%AC%AC03%E9%9B%86/index.m3u8");
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,9 +46,9 @@ class _PagePlayerAppState extends State<PagePlayerApp> {
             children: [
               Container(
                 child: CxPlayer(
-                  handler: PlayerHandler(),
-                  url:
-                      "https://s5.bfbfvip.com/video/minglongshaonian/%E7%AC%AC03%E9%9B%86/index.m3u8",
+                  handler: handler,
+                  // url:
+                  //     "https://s5.bfbfvip.com/video/minglongshaonian/%E7%AC%AC03%E9%9B%86/index.m3u8",
                   onFullScreen: (value) {
                     print("the fullscreen: $value");
                     setState(() {

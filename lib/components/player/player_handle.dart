@@ -2,20 +2,25 @@ import 'package:video_player/video_player.dart';
 
 class PlayerHandler {
   VideoPlayerController? controller;
+  bool finished = false;
   void Function(VideoPlayerController, void)? completed;
   void Function(VideoPlayerController)? listener;
   void Function(VideoPlayerController)? create;
+
   PlayerHandler open(String url) {
     if (controller != null) controller!.dispose();
     controller = VideoPlayerController.networkUrl(Uri.parse(url));
+
     if (create != null) create!(controller!);
     controller!.addListener(() {
       listener!(controller!);
     });
 
     controller!.initialize().then((value) {
+      finished = false;
       completed!(controller!, value);
     });
+
     return this;
   }
 

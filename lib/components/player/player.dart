@@ -16,16 +16,20 @@ class CxPlayer extends StatefulWidget {
     this.width,
     this.height,
     this.onFullScreen,
-    required this.url,
+    // required this.url,
     required this.handler,
     this.onNext,
+    this.onFinish,
+    this.loadedPlay = true,
   });
   final double? width;
   final Function(bool)? onFullScreen;
-  final String url;
+  // final String url;
   final PlayerHandler handler;
   final double? height;
   final Function()? onNext;
+  final Function()? onFinish;
+  final bool loadedPlay;
   @override
   State<CxPlayer> createState() => _CxPlayerState();
 }
@@ -107,11 +111,17 @@ class _CxPlayerState extends State<CxPlayer>
 
     widget.handler.addListener((controller) {
       final pos = controller.value.position;
-      // print("hello: ${pos.inSeconds} ${ratio} ${width}");
+      print("hello: ${pos.inSeconds} ${seconds}");
+
       setState(() {
         seconding = pos.inSeconds;
         progressValue = timeRatio * seconding;
       });
+
+      if (!widget.handler.finished && seconding >= seconds && seconds > 0) {
+        widget.handler.finished = true;
+        if (widget.onFinish != null) widget.onFinish!();
+      }
     });
 
     widget.handler.addComplete((controller, p0) {
@@ -119,12 +129,20 @@ class _CxPlayerState extends State<CxPlayer>
       print("the ratio: ${value.size} ${value.size.width / value.size.height}");
       setState(() {
         loading = false;
+
         seconds = value.duration.inSeconds;
         // print(seconds);
         timeRatio =
             (widget.width ?? MediaQuery.of(context).size.width) / seconds;
         ratio = value.size.height / value.size.width;
       });
+
+      if (widget.loadedPlay) {
+        setState(() {
+          isPlayed = true;
+        });
+        controller.play();
+      }
     });
 
     // controller = VideoPlayerController.networkUrl(Uri.parse(widget.url));

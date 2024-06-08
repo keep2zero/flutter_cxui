@@ -133,7 +133,9 @@ class _CxImageCardState extends State<CxImageCard> {
           widget.title!,
           style: const TextStyle(
             fontSize: 14,
+            overflow: TextOverflow.ellipsis,
           ),
+          maxLines: 1,
         ),
       );
     }

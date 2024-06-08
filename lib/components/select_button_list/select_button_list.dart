@@ -98,7 +98,7 @@ class CxSelectButtonList extends StatefulWidget {
 }
 
 class _CxSelectButtonListState extends State<CxSelectButtonList> {
-  late int selectIndex = widget.defaultSelect ?? 0;
+  // int selectIndex = widget.defaultSelect ?? 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -114,14 +114,15 @@ class _CxSelectButtonListState extends State<CxSelectButtonList> {
   }
 
   Widget? itemBuilder(BuildContext context, int index) {
+    int selectIndex = widget.defaultSelect ?? 0;
     final stack = Stack(
       children: [
         GestureDetector(
           onTap: () {
             widget.onChange(index, widget.data.elementAt(index));
-            setState(() {
-              selectIndex = index;
-            });
+            // setState(() {
+            //   selectIndex = index;
+            // });
           },
           child: Stack(
             children: [
