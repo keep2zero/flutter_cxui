@@ -15,5 +15,7 @@ export 'components/scrollview/scrollview.dart';
 export 'components/player/player.dart';
 export 'components/progress/progress.dart';
 export 'components/chat_view/chat_view.dart';
+export 'components/chat_view/file_view.dart';
+export 'components/chat_view/chat_action.dart';
 
 const version = "1.0.2";

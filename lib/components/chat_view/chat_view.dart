@@ -1,12 +1,67 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_cxui/components/chat_view/chat_avatar.dart';
 import 'package:flutter_cxui/components/chat_view/file_view.dart';
 import 'package:flutter_cxui/components/chat_view/image_view.dart';
 import 'package:flutter_cxui/components/chat_view/text_view.dart';
+import 'package:flutter_cxui/components/utils.dart';
 // import 'package:popover/popover.dart';
-
+import 'package:intl/intl.dart' as intl;
+import 'package:share_plus/share_plus.dart';
 import '../popover/popover.dart';
 import 'arrow_path.dart';
+import 'chat_action.dart';
 import 'chat_data_item.dart';
+
+final Map<String, FileViewConfig> fileTypeMap = {
+  "xlsx": const FileViewConfig(color: Colors.green, short: "X", ext: ".xlsx"),
+  "ppt": const FileViewConfig(color: Colors.orange, short: "PPT", ext: ".ppt"),
+  "word": const FileViewConfig(color: Colors.blue, short: "W", ext: ".doc"),
+  "zip": const FileViewConfig(color: Colors.red, short: "ZIP", ext: ".zip"),
+  "apk": const FileViewConfig(
+      color: Color.fromARGB(255, 3, 161, 48), short: "APK", ext: ".apk"),
+};
+
+final List<ChatAction> actions = [
+  ChatAction(
+    type: const ["text", "link"],
+    icon: Icons.copy,
+    dismiss: true,
+    onPressed: (item) async {
+      // Navigator.of(context).pop();
+      await Clipboard.setData(
+        ClipboardData(text: item.message ?? ""),
+      );
+    },
+    label: "复制",
+  ),
+  ChatAction(
+    type: const ["text", "link", "file", "image", "video"],
+    icon: Icons.share,
+    onPressed: (item) {
+      Share.share(item.message ?? "", subject: "辰汐助手").then((result) {
+        log("分享成功");
+      }, onError: (err) {
+        log("$err");
+      });
+    },
+    label: "分享",
+  ),
+  ChatAction(
+    type: const ["link", "file", "image", "video"],
+    icon: Icons.download,
+    onPressed: (item) {},
+    label: "下载",
+  ),
+  ChatAction(
+    type: const ["image", "video"],
+    icon: Icons.cast,
+    onPressed: (item) {},
+    label: "投屏",
+  ),
+];
 
 // 文本
 // 图片
@@ -15,10 +70,20 @@ import 'chat_data_item.dart';
 // 小程序
 //
 class CxChatView extends StatefulWidget {
-  const CxChatView({super.key, this.isDirect = false, this.data});
+  const CxChatView({
+    super.key,
+    this.isDirect = false,
+    this.data,
+    this.showTime = true,
+    this.contentMenus,
+    this.defaultAvatar = "",
+  });
 
   final bool isDirect;
+  final bool showTime;
   final ChatDataItem? data;
+  final List<Widget>? contentMenus;
+  final String defaultAvatar;
   @override
   State<CxChatView> createState() => _CxChatViewState();
 }
@@ -39,17 +104,15 @@ class _CxChatViewState extends State<CxChatView> {
         size: item?.size,
         fileName: item?.message ?? "",
         fileType: item?.ext,
-        config: const {
-          "xlsx": FileViewConfig(color: Colors.green, short: "X", ext: ".xlsx"),
-          "ppt": FileViewConfig(color: Colors.orange, short: "PPT", ext: ".ppt"),
-          "word": FileViewConfig(color: Colors.blue, short: "W", ext: ".doc"),
-          "zip": FileViewConfig(color: Colors.red, short: "ZIP", ext: ".zip"),
-          "apk": FileViewConfig(color: Color.fromARGB(255, 3, 161, 48), short: "APK", ext: ".apk"),
-        },
+        config: fileTypeMap,
       );
       bgcolor = Colors.white;
     }
 
+    final date = DateTime.fromMillisecondsSinceEpoch(
+        item?.time ?? DateTime.now().millisecondsSinceEpoch);
+    final time = intl.DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
+    print(time);
     //
 
     // const FileView(),
@@ -59,28 +122,44 @@ class _CxChatViewState extends State<CxChatView> {
       padding: const EdgeInsets.all(5),
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              "2024年05月31日 12:00",
-              style: TextStyle(fontSize: 10, color: Colors.grey),
+          if (widget.showTime)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                time,
+                style: const TextStyle(fontSize: 10, color: Colors.grey),
+              ),
             ),
-          ),
           Row(
-            textDirection: widget.isDirect ? TextDirection.rtl : TextDirection.ltr,
-            mainAxisAlignment: widget.isDirect ? MainAxisAlignment.end : MainAxisAlignment.start,
+            textDirection:
+                widget.isDirect ? TextDirection.rtl : TextDirection.ltr,
+            mainAxisAlignment: widget.isDirect
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(item?.avatar ?? ""),
+              SizedBox(
+                width: 50,
+                height: 50,
+                child: CircleAvatar(
+                  // backgroundImage: ,
+                  child: ChatAvatar(
+                    placeholder: widget.defaultAvatar,
+                    avatar: item?.avatar,
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 10,
               ),
               Expanded(
                 child: Column(
-                  mainAxisAlignment: widget.isDirect ? MainAxisAlignment.end : MainAxisAlignment.start,
-                  crossAxisAlignment: widget.isDirect ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                  mainAxisAlignment: widget.isDirect
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start,
+                  crossAxisAlignment: widget.isDirect
+                      ? CrossAxisAlignment.end
+                      : CrossAxisAlignment.start,
                   children: [
                     Text(
                       item?.name ?? "辰汐",
@@ -92,13 +171,27 @@ class _CxChatViewState extends State<CxChatView> {
                     Builder(builder: (context) {
                       return InkWell(
                         onLongPress: () {
+                          // List<Widget> items = [];
+                          // for (var element in actions) {
+                          //   if (element.type.contains(item!.type)) {
+                          //     log("${element.type},,,,${item.type}");
+                          //     items.add(element.build(context, item));
+                          //   }
+                          // }
+
                           openPopover(
-                            context: context,
+                            target: context,
+                            isDirect: widget.isDirect,
+                            offsetX: 50,
+                            items: widget.contentMenus,
+
+                            // context: context,
                           );
                         },
                         child: Container(
                           padding: const EdgeInsets.all(8),
-                          constraints: const BoxConstraints(minHeight: 30, minWidth: 50),
+                          constraints:
+                              const BoxConstraints(minHeight: 30, minWidth: 50),
                           decoration: BoxDecoration(
                             color: bgcolor,
                             borderRadius: BorderRadius.circular(3),
@@ -114,7 +207,9 @@ class _CxChatViewState extends State<CxChatView> {
                                 left: widget.isDirect ? null : -14,
                                 right: widget.isDirect ? -14 : null,
                                 child: ClipPath(
-                                  clipper: ArrowClipper(position: widget.isDirect ? "right" : "left"),
+                                  clipper: ArrowClipper(
+                                      position:
+                                          widget.isDirect ? "right" : "left"),
                                   child: Container(
                                     width: 6, //6
                                     height: 8, //8

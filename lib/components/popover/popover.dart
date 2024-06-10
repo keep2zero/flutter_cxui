@@ -1,39 +1,86 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_cxui/components/popover/popover_arrow.dart';
 
-void openPopover<T extends Object?>({required BuildContext context}) {
-  final RenderBox renderbox = context.findRenderObject() as RenderBox;
+void openPopover<T extends Object?>({
+  required BuildContext target,
+  bool isDirect = false,
+  double offsetX = 20,
+  List<Widget>? items,
+}) {
+  final RenderBox renderbox = target.findRenderObject() as RenderBox;
 
-  log("${context.size}， ${renderbox.localToGlobal(Offset.zero)}, ${renderbox.globalToLocal(Offset.zero)}");
+  //log("${target.size}， ${renderbox.localToGlobal(Offset.zero)}, ${renderbox.globalToLocal(Offset.zero)}");
+
+ 
+
+ // contentmenu box
+  final screenSize = MediaQuery.of(target).size;
+  final screenHeight = screenSize.height;
+  final width = screenSize.width - 80;
+
+   //计算x, y
   final Offset offset = renderbox.localToGlobal(Offset.zero);
+  double x = offset.dx;
+  double y = offset.dy + renderbox.size.height;
+  if(isDirect) {
+    x = screenSize.width - (x + renderbox.size.width) - offsetX - 15;
+    //y = off
+  }
 
-  final x = offset.dx;
-  final y = offset.dy + renderbox.size.height;
 
-  final width = MediaQuery.of(context).size.width - 80;
+  double height = 80;
+  double arrowHeight = 8;
+ 
 
-  Navigator.of(context, rootNavigator: true).push<T>(
+  //arrow
+  double arrowX = x + 10;
+  double arrowY = y;
+  
+  if(isDirect) {
+    arrowX = offset.dx + renderbox.size.width - offsetX;
+  }
+
+
+  bool outBound = false;
+  if(y + height > screenHeight - 100) {
+     y = offset.dy - height - 18;
+     arrowY = offset.dy - 10;
+     outBound = true;
+  }
+ 
+
+  
+
+
+
+  Navigator.of(target, rootNavigator: true).push<T>(
     RawDialogRoute<T>(
       pageBuilder: (_, animation, __) {
         return PopScope(
           child: Popover(
+            // contentW: renderbox.size.width,
+            // contentH: renderbox.size.height,
             x: x,
             y: y,
-            w: width,
-            h: 80,
+            width: width,
+            height: height,
+            arrowX: arrowX,
+            arrowY: arrowY,
+            arrowWidth: 10,
+            arrowHeight: arrowHeight,
+            outBound: outBound,
             child: Container(
               width: width,
-              height: 80,
+              height: height,
               decoration: const BoxDecoration(
                 color: Colors.black54,
                 borderRadius: BorderRadius.all(
                   Radius.circular(8),
                 ),
               ),
+              child: Row(children: items??[],),
             ),
           ),
           onPopInvoked: (didPop) {
@@ -44,24 +91,48 @@ void openPopover<T extends Object?>({required BuildContext context}) {
       barrierDismissible: true,
       barrierLabel: "hello world",
       barrierColor: Colors.transparent,
-      settings: RouteSettings(),
+      settings: const RouteSettings(),
     ),
   );
 }
 
 class Popover extends StatelessWidget {
-  const Popover({super.key, this.child, this.x = 0, this.y = 0, this.w = 100, this.h = 20});
+  const Popover({
+    super.key,
+    this.child,
+    this.x = 0,
+    this.y = 0,
+    this.width = 100,
+    this.height = 20,
+    
+    this.arrowX = 0,
+    this.arrowY = 0,
+    this.arrowWidth = 10,
+    this.arrowHeight = 8,
+    this.outBound = false,
+  });
   final Widget? child;
   final double x;
   final double y;
-  final double w;
-  final double h;
+  final double width;
+  final double height;
+  
+
+  final double arrowWidth;
+  final double arrowHeight;
+  final double arrowX;
+  final double arrowY;
+
+  final bool outBound;
+
   @override
   Widget build(BuildContext context) {
-    final lw = w / 2 - 26;
+    // final lw = w / 2 - 26;
+    // final lw = contentW / 2 - 4;
 
-    log("$w");
+    // final mh = MediaQuery.of(context).size.height;
 
+     
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop();
@@ -70,13 +141,16 @@ class Popover extends StatelessWidget {
         children: [
           if (child != null) Positioned(left: x, top: y + 8, child: child!),
           Positioned(
-            left: x + lw,
-            top: y,
+            // left: 20,
+            // top: y + height > mh ? y + height + 7 : y,
+            left: arrowX,
+            top: arrowY,
             child: ClipPath(
-              clipper: const PopoverArrowClipper(),
+              clipper:
+                  PopoverArrowClipper(position: outBound ? "bottom" : "top"),
               child: Container(
-                width: 10,
-                height: 8,
+                width: arrowWidth,
+                height: arrowHeight,
                 color: Colors.black54,
               ),
             ),

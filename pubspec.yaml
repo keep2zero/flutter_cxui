@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   ionicons: ^0.2.2
   video_player: ^2.8.1
+  intl: ^0.19.0
+  share_plus: ^9.0.0
   # popover: ^0.3.0+1
    
 

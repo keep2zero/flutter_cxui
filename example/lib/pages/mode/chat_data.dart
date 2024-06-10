@@ -3,13 +3,18 @@ import 'package:flutter_cxui/components/chat_view/chat_data_item.dart';
 final chatData = [
   const ChatDataItem(
     name: "Text",
+    message: "https://www.onelineteam.com",
+    type: "link",
+  ),
+  const ChatDataItem(
+    name: "Text",
     message: "You can enable parsing of only some link types using the linkifiers option. URL and email are enabled by default.",
     type: "text",
   ),
   const ChatDataItem(
     name: "hello",
     message: "https://flatfull.com/themes/todo/images/avatar.jpg",
-    avatar: "https://flatfull.com/themes/todo/images/avatar.jpg",
+    avatar: "https://img.zcool.cn/community/01114b5de61f96a80120686b6fd3f8.jpg?x-oss-process=image/resize,m_fill,w_160,h_160,limit_0/auto-orient,1/sharpen,100/quality,q_100/format,webp",
     type: "file",
     ext: "xlsx",
     size: 20,

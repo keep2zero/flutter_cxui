@@ -17,9 +17,9 @@ class PopoverArrowClipper extends CustomClipper<Path> {
       path.lineTo(size.width, size.height);
       path.close();
     } else {
-      path.moveTo(size.width, size.height * 0.5);
-      path.lineTo(0, 0);
-      path.lineTo(0, size.height);
+      path.moveTo(0, 0);
+      path.lineTo(size.width, 0);
+      path.lineTo(size.width/2, size.height);
       path.close();
     }
     return path;
