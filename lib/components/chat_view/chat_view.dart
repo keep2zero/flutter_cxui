@@ -94,9 +94,12 @@ class _CxChatViewState extends State<CxChatView> {
     final item = widget.data;
 
     Widget view = TextView(message: item?.message ?? "");
-    Color bgcolor = Colors.green;
+    Color bgcolor = Colors.white;
+    if (widget.isDirect) {
+      bgcolor = Color.fromARGB(255, 158, 234, 106);
+    }
     if (item?.type == "image") {
-      view = ImageView(data: item?.message ?? "");
+      view = ImageView(data: item?.url ?? item?.message ?? "");
     }
     if (item?.type == "file") {
       view = FileView(

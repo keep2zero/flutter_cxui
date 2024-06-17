@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 class MessageSpan extends InlineSpan {
   @override
-  void build(ParagraphBuilder builder, {TextScaler textScaler = TextScaler.noScaling, List<PlaceholderDimensions>? dimensions}) {}
+  void build(ParagraphBuilder builder,
+      {TextScaler textScaler = TextScaler.noScaling,
+      List<PlaceholderDimensions>? dimensions}) {}
 
   @override
   int? codeUnitAtVisitor(int index, Accumulator offset) {
@@ -20,17 +22,20 @@ class MessageSpan extends InlineSpan {
   }
 
   @override
-  void computeSemanticsInformation(List<InlineSpanSemanticsInformation> collector) {
+  void computeSemanticsInformation(
+      List<InlineSpanSemanticsInformation> collector) {
     // TODO: implement computeSemanticsInformation
   }
 
   @override
-  void computeToPlainText(StringBuffer buffer, {bool includeSemanticsLabels = true, bool includePlaceholders = true}) {
+  void computeToPlainText(StringBuffer buffer,
+      {bool includeSemanticsLabels = true, bool includePlaceholders = true}) {
     // TODO: implement computeToPlainText
   }
 
   @override
-  InlineSpan? getSpanForPositionVisitor(TextPosition position, Accumulator offset) {
+  InlineSpan? getSpanForPositionVisitor(
+      TextPosition position, Accumulator offset) {
     // TODO: implement getSpanForPositionVisitor
     throw UnimplementedError();
   }
@@ -58,7 +63,7 @@ class TextView extends StatelessWidget {
       message,
       strutStyle: StrutStyle(),
       style: const TextStyle(
-        fontSize: 12,
+        fontSize: 14,
       ),
     );
   }
