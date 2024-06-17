@@ -99,7 +99,7 @@ class _CxChatViewState extends State<CxChatView> {
       bgcolor = Color.fromARGB(255, 158, 234, 106);
     }
     if (item?.type == "image") {
-      view = ImageView(data: item?.url ?? item?.message ?? "");
+      view = ImageView(data: item?.url ?? "");
     }
     if (item?.type == "file") {
       view = FileView(
