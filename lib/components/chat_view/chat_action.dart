@@ -8,15 +8,18 @@ import 'package:flutter_cxui/components/chat_view/chat_data_item.dart';
 //   ClipboardData(text: item?.message ?? ""),
 // );
 class ChatAction {
-  const ChatAction(
-      {required this.type,
-      this.onPressed,
-      required this.icon,
-      this.label,
-      this.dismiss = false});
+  const ChatAction({
+    required this.type,
+    this.onPressed,
+    required this.icon,
+    this.label,
+    this.dismiss = false,
+    this.filter,
+  });
 
   final List<String> type;
   final void Function(ChatDataItem)? onPressed;
+  final bool Function(ChatDataItem)? filter;
   final IconData icon;
   final String? label;
   final bool dismiss;
