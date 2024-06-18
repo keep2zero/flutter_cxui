@@ -96,12 +96,23 @@ class _CxChatViewState extends State<CxChatView> {
     Widget view = TextView(message: item?.message ?? "");
     Color bgcolor = Colors.white;
     if (widget.isDirect) {
-      bgcolor = Color.fromARGB(255, 158, 234, 106);
+      bgcolor = const Color.fromARGB(255, 158, 234, 106);
     }
-    if (item?.type == "image") {
-      view = ImageView(data: item?.url ?? "");
+
+    if (item?.type == "image" ||
+        (item?.type == "text" &&
+            LinkUtil.isLink(item?.message ?? "") &&
+            FileUtil.isImage(item?.message ?? "")) ||
+        (item?.type == "file" && FileUtil.isImage(item?.url ?? ""))) {
+      String url = item?.url ?? "";
+      if (item?.type == "text") {
+        url = item?.message ?? "";
+      }
+
+      view = ImageView(data: url);
     }
-    if (item?.type == "file") {
+
+    if (item?.type == "file" && !FileUtil.isImage(item?.url ?? "")) {
       view = FileView(
         file: item?.url,
         size: item?.size,
