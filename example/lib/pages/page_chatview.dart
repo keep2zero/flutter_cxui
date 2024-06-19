@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_cxui/components/utils.dart';
 import 'package:flutter_cxui/cxui.dart';
 
 import 'mode/chat_data.dart';
@@ -26,6 +29,13 @@ class PageChatApp extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: CxChatView(
+                onPress: (item) {
+                  if (item.type == "image" ||
+                      FileUtil.isImage(item.url ?? "") ||
+                      FileUtil.isImage(item.message ?? "")) {
+                    log("image");
+                  }
+                },
                 data: item,
                 isDirect: item.name == "word",
               ),

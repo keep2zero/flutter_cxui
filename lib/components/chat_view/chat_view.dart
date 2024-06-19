@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -77,6 +78,7 @@ class CxChatView extends StatefulWidget {
     this.showTime = true,
     this.contentMenus,
     this.defaultAvatar = "",
+    this.onPress,
   });
 
   final bool isDirect;
@@ -84,11 +86,23 @@ class CxChatView extends StatefulWidget {
   final ChatDataItem? data;
   final List<Widget>? contentMenus;
   final String defaultAvatar;
+  final void Function(ChatDataItem)? onPress;
   @override
   State<CxChatView> createState() => _CxChatViewState();
 }
 
 class _CxChatViewState extends State<CxChatView> {
+  openContextMenu(BuildContext context) {
+    openPopover(
+      target: context,
+      isDirect: widget.isDirect,
+      offsetX: 50,
+      items: widget.contentMenus,
+
+      // context: context,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final item = widget.data;
@@ -184,6 +198,17 @@ class _CxChatViewState extends State<CxChatView> {
                     ),
                     Builder(builder: (context) {
                       return InkWell(
+                        onTap: () {
+                          if (widget.onPress != null) {
+                            widget.onPress!(item!);
+                          }
+                        },
+                        onSecondaryTap: () {
+                          // log("hello");
+                          if (!Platform.isAndroid && !Platform.isIOS) {
+                            openContextMenu(context);
+                          }
+                        },
                         onLongPress: () {
                           // List<Widget> items = [];
                           // for (var element in actions) {
@@ -193,14 +218,9 @@ class _CxChatViewState extends State<CxChatView> {
                           //   }
                           // }
 
-                          openPopover(
-                            target: context,
-                            isDirect: widget.isDirect,
-                            offsetX: 50,
-                            items: widget.contentMenus,
-
-                            // context: context,
-                          );
+                          if (Platform.isAndroid || Platform.isIOS) {
+                            openContextMenu(context);
+                          }
                         },
                         child: Container(
                           padding: const EdgeInsets.all(8),

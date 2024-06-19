@@ -13,47 +13,53 @@ void openPopover<T extends Object?>({
 
   //log("${target.size}， ${renderbox.localToGlobal(Offset.zero)}, ${renderbox.globalToLocal(Offset.zero)}");
 
- 
-
- // contentmenu box
+  // contentmenu box
   final screenSize = MediaQuery.of(target).size;
   final screenHeight = screenSize.height;
   final width = screenSize.width - 80;
 
-   //计算x, y
+  //计算x, y
   final Offset offset = renderbox.localToGlobal(Offset.zero);
   double x = offset.dx;
   double y = offset.dy + renderbox.size.height;
-  if(isDirect) {
+  if (isDirect) {
     x = screenSize.width - (x + renderbox.size.width) - offsetX - 15;
     //y = off
   }
 
-
   double height = 80;
   double arrowHeight = 8;
- 
+  double arrowWidth = 10;
 
   //arrow
-  double arrowX = x + 10;
+  double arrowX = x + arrowWidth;
   double arrowY = y;
-  
-  if(isDirect) {
+
+  if (isDirect) {
     arrowX = offset.dx + renderbox.size.width - offsetX;
   }
 
-
   bool outBound = false;
-  if(y + height > screenHeight - 100) {
-     y = offset.dy - height - 18;
-     arrowY = offset.dy - 10;
-     outBound = true;
+  bool toTop = y + height > screenHeight - 64;
+
+  // bool toBottom = renderbox.size.height + 64 > screenHeight;
+  // log("the ${offset.dy}, $y, ${renderbox.size.height}, ${screenHeight} $toTop, $toBottom");
+
+  if (toTop) {
+    y = offset.dy - height - 18;
+    arrowY = offset.dy - arrowWidth;
+
+    //超出顶部
+    if (y - height < 0) {
+      y = (offset.dy + renderbox.size.height - height) / 2;
+      arrowY = y + height + arrowHeight;
+    }
+
+    outBound = true;
   }
- 
-
-  
-
-
+  // if (toTop && toBottom) {
+  //   y = screenHeight / 2;
+  // }
 
   Navigator.of(target, rootNavigator: true).push<T>(
     RawDialogRoute<T>(
@@ -80,7 +86,9 @@ void openPopover<T extends Object?>({
                   Radius.circular(8),
                 ),
               ),
-              child: Row(children: items??[],),
+              child: Row(
+                children: items ?? [],
+              ),
             ),
           ),
           onPopInvoked: (didPop) {
@@ -104,7 +112,6 @@ class Popover extends StatelessWidget {
     this.y = 0,
     this.width = 100,
     this.height = 20,
-    
     this.arrowX = 0,
     this.arrowY = 0,
     this.arrowWidth = 10,
@@ -116,7 +123,6 @@ class Popover extends StatelessWidget {
   final double y;
   final double width;
   final double height;
-  
 
   final double arrowWidth;
   final double arrowHeight;
@@ -132,7 +138,6 @@ class Popover extends StatelessWidget {
 
     // final mh = MediaQuery.of(context).size.height;
 
-     
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop();

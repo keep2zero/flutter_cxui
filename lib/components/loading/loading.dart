@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CxLoading extends StatefulWidget {
-  const CxLoading({super.key});
-
+  const CxLoading({super.key, this.color = Colors.white, this.size = 40});
+  final Color color;
+  final double size;
   @override
   State<CxLoading> createState() => _CxLoadingState();
 }
@@ -27,8 +28,8 @@ class _CxLoadingState extends State<CxLoading> with TickerProviderStateMixin {
       turns: _animation,
       child: Icon(
         Icons.refresh_outlined,
-        color: Colors.white.withAlpha(160),
-        size: 40,
+        color: widget.color,
+        size: widget.size,
       ),
     );
   }
