@@ -88,8 +88,7 @@ class FileUtil {
 
 class LinkUtil {
   static bool isLink(String url) {
-    final reg = RegExp(
-        r"^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]$");
+    final reg = RegExp(r"^(https?|ftp|file)://.+$");
     return reg.hasMatch(url);
   }
 }
