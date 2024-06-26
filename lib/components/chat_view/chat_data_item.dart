@@ -10,6 +10,7 @@ class ChatDataItem {
   final String? type;
   final String? thumb;
   final String? ext;
+  final String? platform;
   const ChatDataItem({
     this.ciId,
     this.uid,
@@ -22,6 +23,7 @@ class ChatDataItem {
     this.url,
     this.size,
     this.ext,
+    this.platform,
   });
 
   factory ChatDataItem.fromJson(Map<String, dynamic> data) {
@@ -37,6 +39,7 @@ class ChatDataItem {
       url: data["url"],
       size: data["size"],
       ext: data["ext"],
+      platform: data["platform"],
     );
   }
 
@@ -53,11 +56,12 @@ class ChatDataItem {
       "url": url,
       "size": size,
       "ext": ext,
+      "platform": platform,
     };
   }
 
   @override
   String toString() {
-    return "ciId: $ciId, uid: $uid";
+    return "ciId: $ciId, uid: $uid, avatar: $avatar, name: $name, message: $message, time: $time, thumb: $thumb, type: $type, url: $url, size: $size, ext: $ext, platform: $platform";
   }
 }
