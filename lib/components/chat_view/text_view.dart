@@ -64,6 +64,7 @@ class TextView extends StatelessWidget {
       strutStyle: StrutStyle(),
       style: const TextStyle(
         fontSize: 14,
+        color: Colors.black,
       ),
     );
   }
