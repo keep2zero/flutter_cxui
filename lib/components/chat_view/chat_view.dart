@@ -30,7 +30,7 @@ final List<ChatAction> actions = [
     type: const ["text", "link"],
     icon: Icons.copy,
     dismiss: true,
-    onPressed: (item) async {
+    onPressed: (item, {extra}) async {
       // Navigator.of(context).pop();
       await Clipboard.setData(
         ClipboardData(text: item.message ?? ""),
@@ -41,7 +41,7 @@ final List<ChatAction> actions = [
   ChatAction(
     type: const ["text", "link", "file", "image", "video"],
     icon: Icons.share,
-    onPressed: (item) {
+    onPressed: (item, {extra}) {
       Share.share(item.message ?? "", subject: "辰汐助手").then((result) {
         log("分享成功");
       }, onError: (err) {
@@ -53,13 +53,13 @@ final List<ChatAction> actions = [
   ChatAction(
     type: const ["link", "file", "image", "video"],
     icon: Icons.download,
-    onPressed: (item) {},
+    onPressed: (item, {extra}) {},
     label: "下载",
   ),
   ChatAction(
     type: const ["image", "video"],
     icon: Icons.cast,
-    onPressed: (item) {},
+    onPressed: (item, {extra}) {},
     label: "投屏",
   ),
 ];

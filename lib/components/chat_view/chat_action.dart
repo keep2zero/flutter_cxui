@@ -18,13 +18,13 @@ class ChatAction {
   });
 
   final List<String> type;
-  final void Function(ChatDataItem)? onPressed;
-  final bool Function(ChatDataItem)? filter;
+  final void Function(ChatDataItem, {Object? extra})? onPressed;
+  final bool Function(ChatDataItem, {Object? extra})? filter;
   final IconData icon;
   final String? label;
   final bool dismiss;
 
-  Widget build(BuildContext context, ChatDataItem item) {
+  Widget build(BuildContext context, ChatDataItem item, {dynamic extra}) {
     return Container(
       child: Column(
         children: [
@@ -35,7 +35,7 @@ class ChatAction {
             onPressed: () {
               if (dismiss) Navigator.of(context).pop();
               if (onPressed != null) {
-                onPressed!(item);
+                onPressed!(item, extra: extra);
               }
             },
             icon: Icon(

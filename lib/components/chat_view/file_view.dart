@@ -11,7 +11,13 @@ class FileViewConfig {
 }
 
 class FileView extends StatelessWidget {
-  const FileView({super.key, this.file, this.size, this.fileName, this.config, this.fileType});
+  const FileView(
+      {super.key,
+      this.file,
+      this.size,
+      this.fileName,
+      this.config,
+      this.fileType});
   final String? file;
   final String? fileName;
   final int? size;
@@ -37,6 +43,7 @@ class FileView extends StatelessWidget {
                       fileName ?? "",
                       maxLines: 2,
                       style: const TextStyle(
+                        color: Colors.black,
                         fontSize: 14,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -57,7 +64,9 @@ class FileView extends StatelessWidget {
               const SizedBox(
                 width: 20,
               ),
-              ChatFileType(type: filevc?.short ?? "", color: filevc?.color ?? Colors.red),
+              ChatFileType(
+                  type: filevc?.short ?? "",
+                  color: filevc?.color ?? Colors.red),
             ],
           ),
           const SizedBox(
