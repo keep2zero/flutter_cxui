@@ -11,22 +11,28 @@ class FileViewConfig {
 }
 
 class FileView extends StatelessWidget {
-  const FileView(
-      {super.key,
-      this.file,
-      this.size,
-      this.fileName,
-      this.config,
-      this.fileType});
+  const FileView({
+    super.key,
+    this.file,
+    this.size,
+    this.loadingSize,
+    this.fileName,
+    this.config,
+    this.fileType,
+  });
   final String? file;
   final String? fileName;
   final int? size;
+  final int? loadingSize;
   final String? fileType;
   final Map<String, FileViewConfig>? config;
   @override
   Widget build(BuildContext context) {
     final filevc = config?[fileType];
-
+    double? loadingValue;
+    if (loadingSize != null && size != null) {
+      loadingValue = loadingSize! / size!;
+    }
     return Container(
       constraints: const BoxConstraints(maxWidth: 220),
       child: Column(
@@ -64,9 +70,24 @@ class FileView extends StatelessWidget {
               const SizedBox(
                 width: 20,
               ),
-              ChatFileType(
-                  type: filevc?.short ?? "",
-                  color: filevc?.color ?? Colors.red),
+              Stack(
+                children: [
+                  ChatFileType(
+                    type: filevc?.short ?? "",
+                    color: filevc?.color ?? Colors.red,
+                  ),
+                  if (loadingValue != null)
+                    Positioned.fill(
+                      child: Center(
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(value: loadingValue),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ],
           ),
           const SizedBox(

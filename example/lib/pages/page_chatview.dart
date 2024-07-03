@@ -38,6 +38,50 @@ class PageChatApp extends StatelessWidget {
                 },
                 data: item,
                 isDirect: item.name == "word",
+                contentMenus: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.copy,
+                        color: Colors.white,
+                      )),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.copy,
+                        color: Colors.white,
+                      )),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.copy,
+                        color: Colors.white,
+                      )),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.copy,
+                        color: Colors.white,
+                      )),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.copy,
+                        color: Colors.white,
+                      )),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.copy,
+                        color: Colors.white,
+                      )),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.copy,
+                        color: Colors.white,
+                      )),
+                ],
               ),
             );
           },

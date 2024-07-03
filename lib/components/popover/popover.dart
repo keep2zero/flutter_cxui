@@ -8,7 +8,51 @@ void openPopover<T extends Object?>({
   bool isDirect = false,
   double offsetX = 20,
   List<Widget>? items,
+  int splitSize = 5,
+  int itemHeight = 60,
 }) {
+  //split items
+  List<Widget> childs = [
+    Row(
+      children: items ?? [],
+    )
+  ];
+  int loops = 1;
+
+  if (items != null && items.length > splitSize) {
+    loops = (items.length / splitSize).ceil();
+
+    log("item length: ${items.length},  the loops: $loops");
+    childs = [];
+    for (int i = 0; i < loops; i++) {
+      final start = i * splitSize;
+      int end = (i + 1) * splitSize;
+      if (end > items.length) {
+        end = items.length;
+      }
+      childs.add(
+        Row(
+          children: items.sublist(start, end),
+        ),
+      );
+
+      if (i + 1 < loops) {
+        childs.add(
+          const SizedBox(
+            height: 10,
+          ),
+        );
+        childs.add(
+          const Divider(
+            height: 0,
+            thickness: 0.5,
+          ),
+        );
+      }
+    }
+  }
+  log("the items split size: ${childs.length}");
+  //计算位置
   final RenderBox renderbox = target.findRenderObject() as RenderBox;
 
   //log("${target.size}， ${renderbox.localToGlobal(Offset.zero)}, ${renderbox.globalToLocal(Offset.zero)}");
@@ -27,7 +71,7 @@ void openPopover<T extends Object?>({
     //y = off
   }
 
-  double height = 80;
+  double height = itemHeight * loops.toDouble();
   double arrowHeight = 8;
   double arrowWidth = 10;
 
@@ -86,8 +130,8 @@ void openPopover<T extends Object?>({
                   Radius.circular(8),
                 ),
               ),
-              child: Row(
-                children: items ?? [],
+              child: Column(
+                children: childs,
               ),
             ),
           ),

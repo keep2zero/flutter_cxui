@@ -1,16 +1,23 @@
 import 'package:flutter_cxui/components/chat_view/chat_data_item.dart';
 
 final chatData = [
-  const ChatDataItem(
+  ChatDataItem(
     name: "Text",
     message: "https://www.onelineteam.com",
-    type: "link",
+    url:
+        "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=1980&h=768&dpr=10",
+    // type: "link",
+    type: "image",
+    avatar: "https://i.pravatar.cc/300?t=${DateTime.now()}",
   ),
-  const ChatDataItem(
+  ChatDataItem(
     name: "Text",
+    avatar: "https://i.pravatar.cc/300?t=${DateTime.now()}",
+    // type: "text",
+    url: "https://mashiro.asia/assets/app-lIVf6HKT.png",
     message:
         "You can enable parsing of only some link types using the linkifiers option. URL and email are enabled by default.",
-    type: "text",
+    type: "image",
   ),
   const ChatDataItem(
     name: "hello",
@@ -65,6 +72,7 @@ final chatData = [
   ),
   ChatDataItem(
     message: "https://i.pravatar.cc/300?t=${DateTime.now()}",
+    url: "https://mashiro.asia/assets/app-lIVf6HKT.png",
     type: "image",
     avatar: "https://i.pravatar.cc/300?t=${DateTime.now()}",
   ),

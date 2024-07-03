@@ -79,12 +79,17 @@ class CxChatView extends StatefulWidget {
     this.contentMenus,
     this.defaultAvatar = "",
     this.onPress,
+    this.menuHeight = 50,
+    this.menusSplit = 6,
   });
 
   final bool isDirect;
   final bool showTime;
   final ChatDataItem? data;
   final List<Widget>? contentMenus;
+  final int menusSplit;
+
+  final int menuHeight;
   final String defaultAvatar;
   final void Function(ChatDataItem)? onPress;
   @override
@@ -98,7 +103,8 @@ class _CxChatViewState extends State<CxChatView> {
       isDirect: widget.isDirect,
       offsetX: 50,
       items: widget.contentMenus,
-
+      itemHeight: widget.menuHeight,
+      splitSize: widget.menusSplit,
       // context: context,
     );
   }
@@ -140,7 +146,7 @@ class _CxChatViewState extends State<CxChatView> {
     final date = DateTime.fromMillisecondsSinceEpoch(
         item?.time ?? DateTime.now().millisecondsSinceEpoch);
     final time = intl.DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
-    print(time);
+    // print(time);
     //
 
     // const FileView(),
@@ -251,7 +257,7 @@ class _CxChatViewState extends State<CxChatView> {
                                   ),
                                 ),
                               ),
-                              view
+                              view,
                             ],
                           ),
                         ),

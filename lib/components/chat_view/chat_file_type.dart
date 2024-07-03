@@ -35,7 +35,9 @@ class ChatFileType extends StatelessWidget {
             Positioned.fill(
               child: ClipPath(
                 clipper: ChatFileTypePathCorner(),
-                child: Container(color: Color.fromARGB(255, color.red - 20, color.green - 20, color.blue - 20)),
+                child: Container(
+                    color: Color.fromARGB(255, color.red - 20, color.green - 20,
+                        color.blue - 20)),
               ),
             ),
           ],
