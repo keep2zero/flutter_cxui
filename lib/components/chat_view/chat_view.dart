@@ -71,27 +71,30 @@ final List<ChatAction> actions = [
 // 小程序
 //
 class CxChatView extends StatefulWidget {
-  const CxChatView({
-    super.key,
-    this.isDirect = false,
-    this.data,
-    this.showTime = true,
-    this.contentMenus,
-    this.defaultAvatar = "",
-    this.onPress,
-    this.menuHeight = 50,
-    this.menusSplit = 6,
-  });
+  const CxChatView(
+      {super.key,
+      this.isDirect = false,
+      this.data,
+      this.showTime = true,
+      this.contentMenus,
+      this.defaultAvatar = "",
+      this.onPress,
+      this.menuHeight = 50,
+      this.menusSplit = 6,
+      this.extraData,
+      this.reserve = false});
 
   final bool isDirect;
   final bool showTime;
   final ChatDataItem? data;
   final List<Widget>? contentMenus;
   final int menusSplit;
+  final bool reserve;
 
   final int menuHeight;
   final String defaultAvatar;
-  final void Function(ChatDataItem)? onPress;
+  final dynamic extraData;
+  final void Function(ChatDataItem, {dynamic extra})? onPress;
   @override
   State<CxChatView> createState() => _CxChatViewState();
 }
@@ -156,7 +159,7 @@ class _CxChatViewState extends State<CxChatView> {
       padding: const EdgeInsets.all(5),
       child: Column(
         children: [
-          if (widget.showTime)
+          if (widget.showTime && !widget.reserve)
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -206,7 +209,7 @@ class _CxChatViewState extends State<CxChatView> {
                       return InkWell(
                         onTap: () {
                           if (widget.onPress != null) {
-                            widget.onPress!(item!);
+                            widget.onPress!(item!, extra: widget.extraData);
                           }
                         },
                         onSecondaryTap: () {
@@ -268,6 +271,14 @@ class _CxChatViewState extends State<CxChatView> {
               ),
             ],
           ),
+          if (widget.showTime && widget.reserve)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                time,
+                style: const TextStyle(fontSize: 10, color: Colors.grey),
+              ),
+            ),
         ],
       ),
     );
