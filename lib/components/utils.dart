@@ -71,13 +71,7 @@ class FileUtil {
 
   static bool isVideo(String file) {
     final extstr = ext(file);
-    return extstr == "mp4" ||
-        extstr == "m3u8" ||
-        extstr == "avi" ||
-        extstr == "rm" ||
-        extstr == "mov" ||
-        extstr == "mpeg" ||
-        extstr == "qt";
+    return extstr == "mp4" || extstr == "m3u8" || extstr == "avi" || extstr == "rm" || extstr == "mov" || extstr == "mpeg" || extstr == "qt";
   }
 
   static bool isAudio(String file) {
@@ -87,6 +81,11 @@ class FileUtil {
 }
 
 class LinkUtil {
+  static bool isHttp(String url) {
+    final reg = RegExp(r"^(https?)://.+$");
+    return reg.hasMatch(url);
+  }
+
   static bool isLink(String url) {
     final reg = RegExp(r"^(https?|ftp|file)://.+$");
     return reg.hasMatch(url);

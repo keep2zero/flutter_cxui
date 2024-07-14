@@ -6,12 +6,16 @@ class ChatDataItem {
   final String? message;
   final String? url;
   final int? size;
+  int? loadingSize;
   final int? time;
   final String? type;
   final String? thumb;
   final String? ext;
   final String? platform;
-  const ChatDataItem({
+  final String? localThumb;
+  final String? localUrl;
+  final String? localRoot;
+  ChatDataItem({
     this.ciId,
     this.uid,
     this.avatar,
@@ -19,9 +23,13 @@ class ChatDataItem {
     this.message,
     this.time,
     this.thumb,
+    this.localThumb,
+    this.localUrl,
+    this.localRoot,
     this.type,
     this.url,
     this.size,
+    this.loadingSize,
     this.ext,
     this.platform,
   });
@@ -40,6 +48,9 @@ class ChatDataItem {
       size: data["size"],
       ext: data["ext"],
       platform: data["platform"],
+      localThumb: data["localThumb"],
+      localUrl: data["localUrl"],
+      localRoot: data["localRoot"],
     );
   }
 
@@ -57,11 +68,14 @@ class ChatDataItem {
       "size": size,
       "ext": ext,
       "platform": platform,
+      "localThumb": localThumb,
+      "localUrl": localUrl,
+      "localRoot": localRoot,
     };
   }
 
   @override
   String toString() {
-    return "ciId: $ciId, uid: $uid, avatar: $avatar, name: $name, message: $message, time: $time, thumb: $thumb, type: $type, url: $url, size: $size, ext: $ext, platform: $platform";
+    return "ciId: $ciId, uid: $uid, avatar: $avatar, name: $name, message: $message, time: $time, thumb: $thumb, type: $type, url: $url, size: $size, ext: $ext, platform: $platform, localThumb: $localThumb, localUrl: $localUrl，localRoot: $localRoot";
   }
 }

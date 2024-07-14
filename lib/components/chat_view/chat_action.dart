@@ -18,24 +18,23 @@ class ChatAction {
   });
 
   final List<String> type;
-  final void Function(ChatDataItem, {Object? extra})? onPressed;
+  final void Function(BuildContext, dynamic, ChatDataItem, {Object? extra})? onPressed;
   final bool Function(ChatDataItem, {Object? extra})? filter;
   final IconData icon;
   final String? label;
   final bool dismiss;
 
-  Widget build(BuildContext context, ChatDataItem item, {dynamic extra}) {
+  Widget build(BuildContext context, dynamic state, ChatDataItem item, {dynamic extra}) {
     return Container(
       child: Column(
         children: [
           IconButton(
             padding: EdgeInsets.zero,
-            style: const ButtonStyle(
-                padding: WidgetStatePropertyAll(EdgeInsets.zero)),
+            style: const ButtonStyle(padding: WidgetStatePropertyAll(EdgeInsets.zero)),
             onPressed: () {
               if (dismiss) Navigator.of(context).pop();
               if (onPressed != null) {
-                onPressed!(item, extra: extra);
+                onPressed!(context, state, item, extra: extra);
               }
             },
             icon: Icon(
@@ -46,8 +45,7 @@ class ChatAction {
           if (label != null)
             Text(
               label ?? "",
-              style: const TextStyle(
-                  fontSize: 12, color: Colors.white, inherit: false),
+              style: const TextStyle(fontSize: 12, color: Colors.white, inherit: false),
             ),
         ],
       ),

@@ -21,8 +21,10 @@ final Map<String, FileViewConfig> fileTypeMap = {
   "ppt": const FileViewConfig(color: Colors.orange, short: "PPT", ext: ".ppt"),
   "word": const FileViewConfig(color: Colors.blue, short: "W", ext: ".doc"),
   "zip": const FileViewConfig(color: Colors.red, short: "ZIP", ext: ".zip"),
-  "apk": const FileViewConfig(
-      color: Color.fromARGB(255, 3, 161, 48), short: "APK", ext: ".apk"),
+  "pdf": const FileViewConfig(color: Colors.red, short: "PDF", ext: ".pdf"),
+  "apk": const FileViewConfig(color: Color.fromARGB(255, 3, 161, 48), short: "APK", ext: ".apk"),
+  "mp3": const FileViewConfig(color: Color.fromARGB(255, 51, 77, 247), short: "MP3", ext: ".mp3"),
+  "mp4": const FileViewConfig(color: Color.fromARGB(255, 194, 22, 45), short: "MP4", ext: ".mp4"),
 };
 
 final List<ChatAction> actions = [
@@ -30,7 +32,7 @@ final List<ChatAction> actions = [
     type: const ["text", "link"],
     icon: Icons.copy,
     dismiss: true,
-    onPressed: (item, {extra}) async {
+    onPressed: (context, state, item, {extra}) async {
       // Navigator.of(context).pop();
       await Clipboard.setData(
         ClipboardData(text: item.message ?? ""),
@@ -41,7 +43,7 @@ final List<ChatAction> actions = [
   ChatAction(
     type: const ["text", "link", "file", "image", "video"],
     icon: Icons.share,
-    onPressed: (item, {extra}) {
+    onPressed: (context, state, item, {extra}) {
       Share.share(item.message ?? "", subject: "辰汐助手").then((result) {
         log("分享成功");
       }, onError: (err) {
@@ -53,13 +55,13 @@ final List<ChatAction> actions = [
   ChatAction(
     type: const ["link", "file", "image", "video"],
     icon: Icons.download,
-    onPressed: (item, {extra}) {},
+    onPressed: (context, state, item, {extra}) {},
     label: "下载",
   ),
   ChatAction(
     type: const ["image", "video"],
     icon: Icons.cast,
-    onPressed: (item, {extra}) {},
+    onPressed: (context, state, item, {extra}) {},
     label: "投屏",
   ),
 ];
@@ -71,18 +73,22 @@ final List<ChatAction> actions = [
 // 小程序
 //
 class CxChatView extends StatefulWidget {
-  const CxChatView(
-      {super.key,
-      this.isDirect = false,
-      this.data,
-      this.showTime = true,
-      this.contentMenus,
-      this.defaultAvatar = "",
-      this.onPress,
-      this.menuHeight = 50,
-      this.menusSplit = 6,
-      this.extraData,
-      this.reserve = false});
+  const CxChatView({
+    super.key,
+    this.isDirect = false,
+    this.data,
+    this.showTime = true,
+    this.contentMenus,
+    this.defaultAvatar = "",
+    this.onPress,
+    this.menuHeight = 50,
+    this.menusSplit = 6,
+    this.extraData,
+    this.reserve = false,
+    this.loading = 0,
+    this.onLoad,
+    this.assetRoot = "",
+  });
 
   final bool isDirect;
   final bool showTime;
@@ -94,12 +100,24 @@ class CxChatView extends StatefulWidget {
   final int menuHeight;
   final String defaultAvatar;
   final dynamic extraData;
+  final int loading;
+  final String assetRoot;
+
   final void Function(ChatDataItem, {dynamic extra})? onPress;
+  final void Function(Function, ChatDataItem, {dynamic extra})? onLoad;
   @override
-  State<CxChatView> createState() => _CxChatViewState();
+  State<CxChatView> createState() => CxChatViewState();
 }
 
-class _CxChatViewState extends State<CxChatView> {
+class CxChatViewState extends State<CxChatView> {
+  @override
+  initState() {
+    if (mounted) {
+      widget.onLoad?.call(setState, widget.data!, extra: widget.extraData);
+    }
+    super.initState();
+  }
+
   openContextMenu(BuildContext context) {
     openPopover(
       target: context,
@@ -123,22 +141,31 @@ class _CxChatViewState extends State<CxChatView> {
     }
 
     if (item?.type == "image" ||
-        (item?.type == "text" &&
-            LinkUtil.isLink(item?.message ?? "") &&
-            FileUtil.isImage(item?.message ?? "")) ||
+        (item?.type == "text" && LinkUtil.isLink(item?.message ?? "") && FileUtil.isImage(item?.message ?? "")) ||
         (item?.type == "file" && FileUtil.isImage(item?.url ?? ""))) {
-      String url = item?.url ?? "";
-      if (item?.type == "text") {
+      String url = item?.localUrl ?? "";
+      if (url.isEmpty) {
+        url = item?.url ?? "";
+      } else if (widget.assetRoot.isNotEmpty) {
+        url = "${widget.assetRoot}/$url";
+      }
+      if (item?.type == "text" && url.isEmpty) {
         url = item?.message ?? "";
       }
 
-      view = ImageView(data: url);
+      log("the image: $url");
+      view = ImageView(
+        data: url,
+        loadingSize: item?.loadingSize ?? 0,
+        size: item?.size ?? 0,
+      );
     }
 
     if (item?.type == "file" && !FileUtil.isImage(item?.url ?? "")) {
       view = FileView(
         file: item?.url,
-        size: item?.size,
+        size: item?.size ?? 100,
+        loadingSize: item?.loadingSize ?? 0,
         fileName: item?.message ?? "",
         fileType: item?.ext,
         config: fileTypeMap,
@@ -146,8 +173,7 @@ class _CxChatViewState extends State<CxChatView> {
       bgcolor = Colors.white;
     }
 
-    final date = DateTime.fromMillisecondsSinceEpoch(
-        item?.time ?? DateTime.now().millisecondsSinceEpoch);
+    final date = DateTime.fromMillisecondsSinceEpoch(item?.time ?? DateTime.now().millisecondsSinceEpoch);
     final time = intl.DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
     // print(time);
     //
@@ -168,11 +194,8 @@ class _CxChatViewState extends State<CxChatView> {
               ),
             ),
           Row(
-            textDirection:
-                widget.isDirect ? TextDirection.rtl : TextDirection.ltr,
-            mainAxisAlignment: widget.isDirect
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
+            textDirection: widget.isDirect ? TextDirection.rtl : TextDirection.ltr,
+            mainAxisAlignment: widget.isDirect ? MainAxisAlignment.end : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
@@ -191,12 +214,8 @@ class _CxChatViewState extends State<CxChatView> {
               ),
               Expanded(
                 child: Column(
-                  mainAxisAlignment: widget.isDirect
-                      ? MainAxisAlignment.end
-                      : MainAxisAlignment.start,
-                  crossAxisAlignment: widget.isDirect
-                      ? CrossAxisAlignment.end
-                      : CrossAxisAlignment.start,
+                  mainAxisAlignment: widget.isDirect ? MainAxisAlignment.end : MainAxisAlignment.start,
+                  crossAxisAlignment: widget.isDirect ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [
                     Text(
                       item?.name ?? "辰汐",
@@ -233,8 +252,7 @@ class _CxChatViewState extends State<CxChatView> {
                         },
                         child: Container(
                           padding: const EdgeInsets.all(8),
-                          constraints:
-                              const BoxConstraints(minHeight: 30, minWidth: 50),
+                          constraints: const BoxConstraints(minHeight: 30, minWidth: 50),
                           decoration: BoxDecoration(
                             color: bgcolor,
                             borderRadius: BorderRadius.circular(3),
@@ -250,9 +268,7 @@ class _CxChatViewState extends State<CxChatView> {
                                 left: widget.isDirect ? null : -14,
                                 right: widget.isDirect ? -14 : null,
                                 child: ClipPath(
-                                  clipper: ArrowClipper(
-                                      position:
-                                          widget.isDirect ? "right" : "left"),
+                                  clipper: ArrowClipper(position: widget.isDirect ? "right" : "left"),
                                   child: Container(
                                     width: 6, //6
                                     height: 8, //8
@@ -268,6 +284,9 @@ class _CxChatViewState extends State<CxChatView> {
                     }),
                   ],
                 ),
+              ),
+              const SizedBox(
+                width: 50,
               ),
             ],
           ),
