@@ -1,13 +1,13 @@
 import 'package:flutter_cxui/components/chat_view/chat_data_item.dart';
 
-final chatData = [
+var chatData = [
   ChatDataItem(
     name: "Text",
     message: "https://www.onelineteam.com",
-    url:
-        "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=1980&h=768&dpr=10",
+    url: "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=1980&h=768&dpr=10",
     // type: "link",
     type: "image",
+    size: 1000,
     avatar: "https://i.pravatar.cc/300?t=${DateTime.now()}",
   ),
   ChatDataItem(
@@ -15,20 +15,19 @@ final chatData = [
     avatar: "https://i.pravatar.cc/300?t=${DateTime.now()}",
     // type: "text",
     url: "https://mashiro.asia/assets/app-lIVf6HKT.png",
-    message:
-        "You can enable parsing of only some link types using the linkifiers option. URL and email are enabled by default.",
+    size: 900,
+    message: "You can enable parsing of only some link types using the linkifiers option. URL and email are enabled by default.",
     type: "image",
   ),
-  const ChatDataItem(
+  ChatDataItem(
     name: "hello",
     message: "https://flatfull.com/themes/todo/images/avatar.jpg",
-    avatar:
-        "https://img.zcool.cn/community/01114b5de61f96a80120686b6fd3f8.jpg?x-oss-process=image/resize,m_fill,w_160,h_160,limit_0/auto-orient,1/sharpen,100/quality,q_100/format,webp",
+    avatar: "https://img.zcool.cn/community/01114b5de61f96a80120686b6fd3f8.jpg?x-oss-process=image/resize,m_fill,w_160,h_160,limit_0/auto-orient,1/sharpen,100/quality,q_100/format,webp",
     type: "file",
     ext: "xlsx",
     size: 20,
   ),
-  const ChatDataItem(
+  ChatDataItem(
     name: "hello",
     message: "https://flatfull.com/themes/todo/images/avatar.jpg",
     avatar: "https://flatfull.com/themes/todo/images/avatar.jpg",

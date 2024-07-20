@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -10,9 +11,14 @@ void main() {
   runApp(const PageChatApp());
 }
 
-class PageChatApp extends StatelessWidget {
+class PageChatApp extends StatefulWidget {
   const PageChatApp({super.key});
 
+  @override
+  State<PageChatApp> createState() => _PageChatAppState();
+}
+
+class _PageChatAppState extends State<PageChatApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,22 +31,36 @@ class PageChatApp extends StatelessWidget {
         body: ListView.builder(
           itemCount: chatData.length,
           itemBuilder: (context, index) {
-            final item = chatData[index];
+            var item = chatData[index];
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: CxChatView(
-                onPress: (item) {
-                  if (item.type == "image" ||
-                      FileUtil.isImage(item.url ?? "") ||
-                      FileUtil.isImage(item.message ?? "")) {
+                onPress: (item, {extra}) {
+                  if (item.type == "image" || FileUtil.isImage(item.url ?? "") || FileUtil.isImage(item.message ?? "")) {
                     log("image");
                   }
                 },
+                menuHeight: 60,
+                defaultAvatar: "assets/img/cx-logo.png",
                 data: item,
                 isDirect: item.name == "word",
                 contentMenus: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        int size = item.loadingSize ?? 0;
+                        Timer.periodic(Duration(seconds: 1), (t) {
+                          if (item.size == null) {
+                            return;
+                          }
+                          log("hello size: ${item.loadingSize}");
+                          size = size + 10;
+                          item.loadingSize = size;
+                          setState(() {});
+                          if (item.loadingSize! >= item.size!) {
+                            t.cancel();
+                          }
+                        });
+                      },
                       icon: const Icon(
                         Icons.copy,
                         color: Colors.white,
